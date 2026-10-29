@@ -1,0 +1,6 @@
+{
+  "name": "공간·디자인 기획 포트폴리오",
+  "description": "막연한 아이디어에 구체적인 시작점을 만듭니다. 철학적 개념과 깊이 있는 리서치로 공간과 디자인의 방향을 설계하는 기획자 포트폴리오.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
