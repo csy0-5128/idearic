@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X, ShieldCheck, Lock, Eye, LayoutDashboard } from 'lucide-react';
 
 interface HeaderProps {
   onContactClick: () => void;
+  isAdmin: boolean;
+  viewMode: 'visitor' | 'admin-desk';
+  onToggleAdmin: () => void;
+  onChangeViewMode: (mode: 'visitor' | 'admin-desk') => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
+export const Header: React.FC<HeaderProps> = ({ 
+  onContactClick,
+  isAdmin,
+  viewMode,
+  onToggleAdmin,
+  onChangeViewMode
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [inputPasscode, setInputPasscode] = useState('');
+  const [authError, setAuthError] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,103 +32,283 @@ export const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
 
   const navLinks = [
     { label: 'HOME', href: '#hero' },
+    { label: 'PROJECTS', href: '#project' },
     { label: 'ABOUT', href: '#about' },
-    { label: 'PROJECT', href: '#project' },
     { label: '1:1 DIALOGUE', href: '#dialogue' },
-    { label: 'DRAWING', href: '#blueprint-details' },
+    { label: 'DRAWINGS', href: '#blueprint-details' },
     { label: 'CONTACT', href: '#contact' },
   ];
 
+  const handleAdminAuthSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputPasscode === 'admin' || inputPasscode === '1234' || inputPasscode === '') {
+      onToggleAdmin();
+      setShowAuthModal(false);
+      setInputPasscode('');
+      setAuthError('');
+    } else {
+      setAuthError('비밀번호가 올바르지 않습니다. (기본 비밀번호: admin)');
+    }
+  };
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#181A1F]/80 backdrop-blur-md border-b border-white/10 text-white shadow-lg'
-          : 'bg-black/25 backdrop-blur-xs border-b border-white/10 text-white'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        
-        {/* Left Nav Links */}
-        <nav className="hidden md:flex items-center gap-7 text-[11px] font-mono tracking-widest text-neutral-300">
-          <a href="#hero" className="hover:text-white transition-colors">HOME</a>
-          <a href="#about" className="hover:text-white transition-colors">ABOUT</a>
-          <a href="#project" className="hover:text-white transition-colors">PROJECT</a>
-        </nav>
-
-        {/* Center Geometric Emblem Logo (like the reference image's dual rhombic emblem) */}
-        <a
-          href="#hero"
-          className="flex items-center gap-2.5 text-white hover:opacity-90 transition-opacity"
-        >
-          <div className="w-7 h-7 relative flex items-center justify-center">
-            {/* Interlocking geometric diamond mark */}
-            <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6 stroke-white stroke-[1.5]">
-              <rect x="8" y="8" width="16" height="16" transform="rotate(45 16 16)" rx="2" />
-              <circle cx="16" cy="16" r="3" fill="currentColor" />
-            </svg>
+    <>
+      {/* Top Admin Notice Bar (Visible only when Admin is logged in) */}
+      {isAdmin && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-[#16181F] text-[#EFEBE4] border-b border-white/15 px-6 py-2 text-xs font-mono flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            <span className="font-bold tracking-wider text-white">IDEARIC ADMIN DESK ACTIVE</span>
+            <span className="text-white/30 hidden sm:inline">|</span>
+            <span className="text-neutral-400 hidden sm:inline">
+              현재 모드: {viewMode === 'admin-desk' ? '관리자 대시보드' : '사용자(방문자) 화면'}
+            </span>
           </div>
-          <span className="font-syne font-bold text-sm tracking-wider uppercase hidden sm:inline">
-            Spatial Planning
-          </span>
-        </a>
 
-        {/* Right Nav Links & Language / CTA */}
-        <div className="hidden md:flex items-center gap-6 text-[11px] font-mono tracking-widest text-neutral-300">
-          <a href="#dialogue" className="hover:text-[#C49B74] transition-colors text-white font-medium">1:1 DIALOGUE</a>
-          <a href="#blueprint-details" className="hover:text-white transition-colors">DRAWING</a>
-          <a href="#contact" className="hover:text-white transition-colors">CONTACT</a>
-          <span className="text-white/30">|</span>
+          <div className="flex items-center gap-3">
+            {viewMode === 'admin-desk' ? (
+              <button
+                onClick={() => onChangeViewMode('visitor')}
+                className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded text-[11px] text-white flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span>사용자 화면 보기</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => onChangeViewMode('admin-desk')}
+                className="px-3 py-1 bg-white text-black font-semibold hover:bg-neutral-200 rounded text-[11px] flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <LayoutDashboard className="w-3.5 h-3.5" />
+                <span>관리자 데스크 열기</span>
+              </button>
+            )}
+
+            <button
+              onClick={onToggleAdmin}
+              className="text-neutral-400 hover:text-white text-[11px] underline ml-2 cursor-pointer"
+            >
+              로그아웃
+            </button>
+          </div>
+        </div>
+      )}
+
+      <header
+        className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+          isAdmin ? 'top-9' : 'top-0'
+        } ${
+          isScrolled
+            ? 'bg-[#0D0E11]/90 backdrop-blur-md border-b border-white/10 text-white shadow-xl'
+            : 'bg-gradient-to-b from-[#0D0E11]/80 to-transparent border-b border-transparent text-white'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
+          
+          {/* Left Brand Wordmark: Interlocking Wireframe Emblem + "IDEARIC ARCHITECTS" */}
           <a
-            href="#dialogue"
-            className="text-[11px] font-mono text-[#EFECE6] bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-full border border-white/20 transition-all cursor-pointer flex items-center gap-1.5"
+            href="#hero"
+            className="flex items-center gap-3.5 text-white hover:opacity-90 transition-opacity group"
           >
-            <span>1:1 질문하기</span>
-            <ArrowUpRight className="w-3 h-3 text-[#C49B74]" />
+            {/* Interlocking geometric rectangular lines logo like FORMA in reference */}
+            <div className="w-7 h-7 relative flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7 stroke-white stroke-[1.25]">
+                <rect x="3" y="3" width="18" height="18" rx="0.5" />
+                <rect x="11" y="11" width="18" height="18" rx="0.5" className="stroke-white/80" />
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-condensed text-xl sm:text-2xl font-bold tracking-[0.2em] text-white leading-none">
+                IDEARIC
+              </span>
+              <span className="text-[9px] font-mono tracking-[0.25em] text-neutral-400 uppercase leading-none mt-1">
+                ARCHITECTS & PLANNING
+              </span>
+            </div>
           </a>
-        </div>
 
-        {/* Mobile menu toggle */}
-        <div className="flex md:hidden items-center">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="메뉴 열기"
-            className="p-2 text-white hover:bg-white/10 rounded-md transition-colors"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#181A1F]/95 backdrop-blur-xl border-b border-white/10 px-6 py-6 text-white animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col gap-4 text-xs font-mono tracking-widest">
+          {/* Center/Right Nav Links matching reference layout */}
+          <nav className="hidden lg:flex items-center gap-8 text-[11px] font-mono tracking-[0.2em] text-neutral-300">
             {navLinks.map((link) => (
-              <a
+              <a 
                 key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1 text-neutral-300 hover:text-white border-b border-white/5"
+                href={link.href} 
+                className="hover:text-white transition-colors uppercase whitespace-nowrap relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
               >
                 {link.label}
               </a>
             ))}
-            <div className="pt-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onContactClick();
-                }}
-                className="w-full py-2.5 text-xs font-mono font-semibold text-[#181A1F] bg-white rounded-full flex items-center justify-center gap-1.5"
+          </nav>
+
+          {/* Right Controls: 1:1 CTA Button, Admin Lock, and Menu */}
+          <div className="hidden sm:flex items-center gap-4">
+            <a
+              href="#dialogue"
+              className="px-4 py-2 text-[11px] font-mono tracking-wider uppercase text-white arch-btn rounded-none flex items-center gap-2 cursor-pointer"
+            >
+              <span>1:1 질문하기</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-neutral-300" />
+            </a>
+
+            {/* Admin Lock Button */}
+            <button
+              onClick={() => {
+                if (isAdmin) {
+                  onChangeViewMode(viewMode === 'admin-desk' ? 'visitor' : 'admin-desk');
+                } else {
+                  setShowAuthModal(true);
+                }
+              }}
+              className={`p-2 border transition-all cursor-pointer ${
+                isAdmin
+                  ? 'bg-white text-black border-white shadow-sm'
+                  : 'bg-white/5 hover:bg-white/15 text-neutral-300 border-white/20'
+              }`}
+              title={isAdmin ? '관리자 데스크 전환' : '관리자 로그인'}
+            >
+              {isAdmin ? <ShieldCheck className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {/* Mobile menu toggle */}
+          <div className="flex lg:hidden items-center gap-3">
+            <button
+              onClick={() => {
+                if (isAdmin) {
+                  onChangeViewMode(viewMode === 'admin-desk' ? 'visitor' : 'admin-desk');
+                } else {
+                  setShowAuthModal(true);
+                }
+              }}
+              className="p-2 text-white/80 hover:text-white border border-white/20"
+              title="관리자"
+            >
+              <Lock className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="메뉴 열기"
+              className="p-2 text-white hover:bg-white/10 transition-colors"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 stroke-[1.5]" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-[#0D0E11]/98 backdrop-blur-2xl border-b border-white/10 px-8 py-8 text-white animate-in slide-in-from-top-2 duration-200">
+            <nav className="flex flex-col gap-5 text-xs font-mono tracking-[0.2em]">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-1 text-neutral-300 hover:text-white border-b border-white/10"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <div className="pt-4 flex flex-col gap-3">
+                <a
+                  href="#dialogue"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-3 text-xs font-mono tracking-wider uppercase text-center text-black bg-white flex items-center justify-center gap-2"
+                >
+                  <span>1:1 질문하기</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (isAdmin) {
+                      onChangeViewMode(viewMode === 'admin-desk' ? 'visitor' : 'admin-desk');
+                    } else {
+                      setShowAuthModal(true);
+                    }
+                  }}
+                  className="w-full py-2.5 text-xs font-mono tracking-wider text-neutral-300 border border-white/20 flex items-center justify-center gap-2"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                  <span>{isAdmin ? '관리자 데스크 전환' : '관리자(기획자) 로그인'}</span>
+                </button>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* Admin Passcode Modal */}
+      {showAuthModal && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setShowAuthModal(false)}
+        >
+          <div 
+            className="w-full max-w-sm bg-[#13151A] text-white p-7 border border-white/20 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/15">
+              <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-white uppercase">
+                <ShieldCheck className="w-4 h-4 text-white" />
+                <span>IDEARIC ADMIN AUTH</span>
+              </div>
+              <button 
+                onClick={() => setShowAuthModal(false)}
+                className="text-neutral-400 hover:text-white"
               >
-                <span>협업 제안하기 (이메일)</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                ✕
               </button>
             </div>
-          </nav>
+
+            <p className="text-xs text-neutral-400 font-mono mb-5 leading-relaxed">
+              기획자 관리자 모드로 진입하여 접수된 1:1 질문을 확인하고 공식 답변을 발행합니다.
+            </p>
+
+            <form onSubmit={handleAdminAuthSubmit} className="space-y-4 font-mono text-xs">
+              <div>
+                <label className="block text-neutral-400 mb-1.5 uppercase text-[10px] tracking-wider">
+                  관리자 비밀번호 (기본값: admin)
+                </label>
+                <input
+                  type="password"
+                  autoFocus
+                  placeholder="admin 입력"
+                  value={inputPasscode}
+                  onChange={(e) => setInputPasscode(e.target.value)}
+                  className="w-full p-3 bg-black/60 border border-white/25 text-white focus:outline-hidden focus:border-white"
+                />
+              </div>
+
+              {authError && (
+                <p className="text-xs text-red-400 font-mono">{authError}</p>
+              )}
+
+              <div className="pt-2 flex flex-col gap-2.5">
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-white text-black font-mono font-bold tracking-wider uppercase hover:bg-neutral-200 shadow-md transition-all cursor-pointer"
+                >
+                  인증하고 관리자 모드 진입
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onToggleAdmin();
+                    setShowAuthModal(false);
+                  }}
+                  className="w-full py-2.5 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/15 transition-all cursor-pointer"
+                >
+                  원클릭 바로 체험 진입
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
-    </header>
+    </>
   );
 };

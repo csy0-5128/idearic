@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, Compass, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Compass, Layers, Sparkles } from 'lucide-react';
 
 interface HeroProps {
   onExploreProject: () => void;
@@ -13,157 +13,118 @@ export const Hero: React.FC<HeroProps> = ({
   onContactClick,
 }) => {
   return (
-    <section id="hero" className="relative min-h-[92vh] flex flex-col justify-between pt-24 pb-0 text-white overflow-hidden bg-[#15171C]">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-between pt-28 pb-16 bg-[#0D0E11] text-white overflow-hidden">
       
-      {/* Background Architectural Canvas with Warm Sunset Lighting & Cantilever Atmosphere */}
+      {/* Background Architectural Scenery with Dusk Atmosphere (inspired by reference image) */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/hillside_architecture_model_1793260635825.jpg"
-          alt="경사지 생태 건축 배경"
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-center scale-105 filter brightness-[0.72] contrast-[1.1] saturate-[0.9]"
+          src="/public/assets/aistudio/image_8cc74ad8.png"
+          alt="IDEARIC Architectural Scenery"
+          className="w-full h-full object-cover object-top scale-105 filter brightness-[0.55] contrast-[1.2] saturate-[0.85]"
         />
-        {/* Cinematic dusk warm glow & twilight gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#15171C] via-[#15171C]/45 to-black/60"></div>
-        <div className="absolute inset-0 bg-radial-at-tr from-[#D49F73]/25 via-transparent to-transparent pointer-events-none"></div>
+        {/* Cinematic dark gradients matching the brutalist modern style */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E11] via-[#0D0E11]/60 to-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D0E11] via-[#0D0E11]/80 to-transparent"></div>
+        <div className="absolute inset-0 architectural-dark-grid opacity-40 pointer-events-none"></div>
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex-1 flex flex-col justify-between py-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full flex-1 flex flex-col justify-center py-12">
         
-        {/* Top Editorial Ribbon: Right-aligned micro text like reference */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-8 text-[11px] font-mono tracking-widest text-neutral-300">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-[#C49B74] rounded-full"></span>
-            <span className="text-white/80">PORTFOLIO ARCHITECTURE</span>
-          </div>
-          <div className="hidden sm:block text-right text-neutral-300/80">
-            defined by research, elevated by design, substantiated by drawing.
-          </div>
-        </div>
-
-        {/* Hero Typography & Floating Glass Metric Cushion Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end my-auto">
+        {/* Left Column: Typographic Hierarchy inspired by FORMA reference */}
+        <div className="max-w-3xl">
           
-          {/* Left / Center Display Typography ("vela armon" avant-garde style) */}
-          <div className="lg:col-span-8 flex flex-col">
-            
-            {/* Massive stylized Latin header reminiscent of "vela armon" */}
-            <div className="mb-4">
-              <div className="flex items-baseline gap-4">
-                <span className="font-syne text-5xl sm:text-7xl md:text-8xl lg:text-[6.5rem] font-extrabold tracking-tight text-white leading-none">
-                  spatia
-                </span>
-                <span className="text-xs sm:text-sm font-mono text-[#C49B74] tracking-widest uppercase">
-                  architectural
-                </span>
-              </div>
-              <div className="font-syne text-5xl sm:text-7xl md:text-8xl lg:text-[6.5rem] font-extrabold tracking-tight text-[#EFEBE3] leading-none -mt-1 sm:-mt-3">
-                planning
-              </div>
-            </div>
-
-            {/* Left micro emblem & descriptive tagline */}
-            <div className="flex items-start gap-3 my-4">
-              <span className="text-[#C49B74] text-xl font-bold leading-none select-none">✦</span>
-              <p className="text-[11px] font-mono tracking-wider text-neutral-300 uppercase max-w-xs leading-relaxed">
-                A sculptural form rising from the natural slope · hillside ecological architecture
-              </p>
-            </div>
-
-            {/* Korean Core Prompt Headlines (Verbatim) */}
-            <div className="mt-4 pt-6 border-t border-white/15 max-w-2xl">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight leading-snug mb-3 text-balance">
-                막연한 아이디어에 구체적인 시작점을 만듭니다.
-              </h1>
-              <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed text-balance">
-                철학적 개념과 깊이 있는 리서치로 공간과 디자인의 방향을 설계합니다.
-              </p>
-            </div>
-
+          {/* Micro Top Eyebrow with small keywords requested by user: architecture, space, from */}
+          <div className="flex flex-wrap items-center gap-2.5 text-[11px] font-mono tracking-[0.28em] text-neutral-400 uppercase mb-4">
+            <span className="text-white font-medium">architecture</span>
+            <span className="text-white/30">/</span>
+            <span>space</span>
+            <span className="text-white/30">/</span>
+            <span className="text-neutral-300">from concept to form</span>
           </div>
 
-          {/* Right Column: Floating Liquid Cushion Glass Metric Cards (like 15 Years / 120 Homes in reference) */}
-          <div className="lg:col-span-4 flex flex-col gap-4 items-start lg:items-end">
-            
-            {/* Floating Cushion Card 1 */}
-            <div className="w-full max-w-xs liquid-cushion-dark rounded-2xl p-5 border border-white/20 transition-transform duration-300 hover:-translate-y-1">
-              <div className="flex items-baseline justify-between mb-1">
-                <span className="font-syne text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                  생태 공생
-                </span>
-                <span className="text-[10px] font-mono text-[#C49B74] uppercase tracking-wider">
-                  ECOLOGICAL
-                </span>
-              </div>
-              <p className="text-xs text-neutral-300 font-light leading-snug">
-                경사지 수목의 수평적 성장 환경 제공
-              </p>
+          {/* User Requested Massive Headline: "IDEARIC" with surrounding micro labels */}
+          <div className="relative my-2 select-none">
+            {/* Small floating annotation text around IDEARIC */}
+            <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.3em] text-neutral-400 uppercase mb-1">
+              <span>[ from abstract thought ]</span>
+              <span className="w-8 h-px bg-white/20"></span>
+              <span>[ to spatial reality ]</span>
             </div>
 
-            {/* Floating Cushion Card 2 */}
-            <div className="w-full max-w-xs liquid-cushion-dark rounded-2xl p-5 border border-white/20 transition-transform duration-300 hover:-translate-y-1">
-              <div className="flex items-baseline justify-between mb-1">
-                <span className="font-syne text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                  단면 설계
-                </span>
-                <span className="text-[10px] font-mono text-[#C49B74] uppercase tracking-wider">
-                  SCHEMATIC
-                </span>
-              </div>
-              <p className="text-xs text-neutral-300 font-light leading-snug">
-                바람길과 인간의 테라스·지붕 일체화 구조
-              </p>
-            </div>
+            {/* Giant Title: IDEARIC */}
+            <h1 className="font-condensed text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-bold tracking-tight text-white uppercase leading-[0.88] mb-4">
+              IDEARIC.
+            </h1>
 
+            {/* Adjacent micro words: architecture · space · from */}
+            <div className="flex items-center gap-4 text-xs font-mono tracking-[0.25em] text-neutral-400 uppercase mb-6">
+              <span className="text-white font-medium">from</span>
+              <span className="w-1 h-1 rounded-full bg-white/50"></span>
+              <span>ideas</span>
+              <span className="w-1 h-1 rounded-full bg-white/50"></span>
+              <span>to</span>
+              <span className="w-1 h-1 rounded-full bg-white/50"></span>
+              <span className="text-white font-medium">architecture & space</span>
+            </div>
+          </div>
+
+          {/* Minimalist Horizontal Hairline Accent */}
+          <div className="w-16 h-px bg-white/40 mb-6"></div>
+
+          {/* Core User Brief Text (Verbatim & Authentic) */}
+          <div className="max-w-xl mb-10">
+            <p className="text-xl sm:text-2xl font-light text-white tracking-tight mb-2 leading-snug">
+              막연한 아이디어에 구체적인 시작점을 만듭니다.
+            </p>
+            <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
+              철학적 개념과 깊이 있는 리서치로 공간과 디자인의 방향을 설계합니다.
+            </p>
+          </div>
+
+          {/* Action Buttons matching the reference image's sharp outline buttons */}
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={onExploreProject}
+              className="px-6 py-3.5 text-xs font-mono tracking-[0.2em] uppercase text-white arch-btn flex items-center gap-3 cursor-pointer group"
+            >
+              <span>EXPLORE PROJECTS</span>
+              <ArrowRight className="w-4 h-4 text-neutral-400 group-hover:translate-x-1 group-hover:text-white transition-all" />
+            </button>
+
+            <button
+              onClick={onContactClick}
+              className="px-6 py-3.5 text-xs font-mono tracking-[0.2em] uppercase text-black bg-white hover:bg-neutral-200 transition-all flex items-center gap-3 cursor-pointer font-bold group shadow-lg"
+            >
+              <span>1:1 아이디어 질문하기</span>
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </button>
           </div>
 
         </div>
 
       </div>
 
-      {/* Signature Concave Scoop Bottom Contour with Centered Contact Pill (as in reference image) */}
-      <div className="relative z-20 w-full">
-        {/* Concave architectural curve transition to light travertine */}
-        <div className="relative h-20 bg-[#F4F2EC] flex items-center justify-center">
-          
-          {/* Subtle curved dip cutout container */}
-          <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-center justify-center">
-            <button
-              onClick={onContactClick}
-              className="group px-7 py-3 bg-white text-[#1C1E22] rounded-full shadow-xl border border-neutral-200/80 flex items-center gap-3 transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer"
-            >
-              <span className="text-xs font-mono font-bold tracking-wider uppercase">1:1 아이디어 질문하기</span>
-              <div className="w-6 h-6 rounded-full bg-[#C49B74] text-white flex items-center justify-center group-hover:rotate-45 transition-transform duration-300">
-                <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-              </div>
-            </button>
-          </div>
+      {/* Bottom Floating Bar with Pagination Indicator (01 / 03) like Reference Image */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full flex items-center justify-between text-xs font-mono text-neutral-400 border-t border-white/10 pt-6">
+        <div className="flex items-center gap-6">
+          <button
+            onClick={onExploreAbout}
+            className="hover:text-white transition-colors cursor-pointer flex items-center gap-2"
+          >
+            <span>↓ ABOUT PHILOSOPHY</span>
+          </button>
+          <span className="text-white/20">|</span>
+          <span className="hidden sm:inline text-neutral-500">
+            ECOLOGICAL HILLSIDE ARCHITECTURE · RESEARCH-LED PLANNING
+          </span>
+        </div>
 
-          {/* Quick horizontal jump links */}
-          <div className="max-w-7xl mx-auto px-6 w-full flex items-center justify-between text-[11px] font-mono text-[#5C5F66]">
-            <button
-              onClick={onExploreAbout}
-              className="hover:text-[#1C1E22] transition-colors cursor-pointer"
-            >
-              ↓ 기획 철학 읽어보기
-            </button>
-            <div className="flex items-center gap-6">
-              <button
-                onClick={onContactClick}
-                className="hover:text-[#1C1E22] text-[#B88E68] font-semibold transition-colors cursor-pointer"
-              >
-                1:1 대화 공간 참여하기 →
-              </button>
-              <button
-                onClick={onExploreProject}
-                className="hover:text-[#1C1E22] transition-colors cursor-pointer hidden sm:inline"
-              >
-                대표 도면 바로보기 →
-              </button>
-            </div>
-          </div>
-
+        {/* 01 / 03 indicator box from reference */}
+        <div className="flex items-center gap-3 bg-white/5 border border-white/15 px-3 py-1.5 text-[11px] tracking-widest">
+          <span className="text-white font-bold">01</span>
+          <span className="text-white/30">—</span>
+          <span className="text-neutral-500">03</span>
         </div>
       </div>
 

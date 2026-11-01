@@ -7,42 +7,51 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-14 bg-[#1C1E22] text-white text-xs border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <footer className="py-12 bg-[#090A0D] text-white text-xs border-t border-white/10 font-mono">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
         
-        {/* Brand Lockup */}
-        <div className="flex items-center gap-3">
-          <div className="w-5 h-5 flex items-center justify-center">
-            <svg viewBox="0 0 32 32" fill="none" className="w-4 h-4 stroke-[#C49B74] stroke-[2]">
-              <rect x="8" y="8" width="16" height="16" transform="rotate(45 16 16)" rx="2" />
-              <circle cx="16" cy="16" r="3" fill="currentColor" />
-            </svg>
+        {/* Brand & Copyright */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 border border-white/40 flex items-center justify-center">
+              <span className="w-1.5 h-1.5 bg-white"></span>
+            </div>
+            <span className="font-condensed text-base font-bold tracking-[0.15em] text-white">
+              IDEARIC
+            </span>
           </div>
-          <div>
-            <p className="font-syne font-bold text-sm tracking-wide text-white">
-              SPATIAL PLANNING PORTFOLIO
-            </p>
-            <p className="text-[11px] font-mono text-neutral-400">
-              막연한 아이디어에 구체적인 시작점을 만듭니다.
-            </p>
-          </div>
+          <span className="text-white/20 hidden sm:inline">|</span>
+          <p className="text-[11px] text-neutral-500 tracking-wider">
+            © 2026 IDEARIC ARCHITECTS & SPATIAL PLANNING. ALL RIGHTS RESERVED.
+          </p>
         </div>
 
-        {/* Links & Scroll to top */}
-        <div className="flex items-center gap-6 font-mono text-[11px] text-neutral-300">
+        {/* Center Nav / Socials matching reference */}
+        <div className="flex items-center gap-6 text-[11px] text-neutral-400 tracking-widest uppercase">
+          <a href="#hero" className="hover:text-white transition-colors">HOME</a>
+          <span className="text-white/20">|</span>
+          <a href="#project" className="hover:text-white transition-colors">PROJECTS</a>
+          <span className="text-white/20">|</span>
+          <a href="#about" className="hover:text-white transition-colors">ABOUT</a>
+          <span className="text-white/20">|</span>
+          <a href="#dialogue" className="hover:text-white transition-colors">1:1 DIALOGUE</a>
+        </div>
+
+        {/* Email & Top Button */}
+        <div className="flex items-center gap-6 text-[11px] text-neutral-400">
           <a
             href="mailto:csy50533394@gmail.com"
-            className="hover:text-[#C49B74] transition-colors"
+            className="hover:text-white transition-colors text-white font-medium"
           >
             csy50533394@gmail.com
           </a>
           <span className="text-white/20">|</span>
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors cursor-pointer"
           >
             <span>TOP</span>
-            <ArrowUp className="w-3 h-3 text-[#C49B74]" />
+            <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>
 
