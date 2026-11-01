@@ -7,51 +7,51 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="py-12 bg-[#090A0D] text-white text-xs border-t border-white/10 font-mono">
+    <footer className="py-14 bg-[#2A2215] text-[#E5E0D8] text-xs border-t border-[#725C3A]/30 font-mono">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Brand & Copyright */}
         <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border border-white/40 flex items-center justify-center">
-              <span className="w-1.5 h-1.5 bg-white"></span>
+            <div className="w-4 h-4 border border-[#809671] flex items-center justify-center">
+              <span className="w-1.5 h-1.5 bg-[#809671]"></span>
             </div>
-            <span className="font-condensed text-base font-bold tracking-[0.15em] text-white">
+            <span className="font-condensed text-base font-bold tracking-[0.2em] text-[#F8F6F0]">
               IDEARIC
             </span>
           </div>
-          <span className="text-white/20 hidden sm:inline">|</span>
-          <p className="text-[11px] text-neutral-500 tracking-wider">
+          <span className="text-[#725C3A] hidden sm:inline">|</span>
+          <p className="text-[11px] text-[#B3B792] tracking-wider">
             © 2026 IDEARIC ARCHITECTS & SPATIAL PLANNING. ALL RIGHTS RESERVED.
           </p>
         </div>
 
-        {/* Center Nav / Socials matching reference */}
-        <div className="flex items-center gap-6 text-[11px] text-neutral-400 tracking-widest uppercase">
+        {/* Center Nav */}
+        <div className="flex items-center gap-6 text-[11px] text-[#E5D2B8] tracking-widest uppercase">
           <a href="#hero" className="hover:text-white transition-colors">HOME</a>
-          <span className="text-white/20">|</span>
+          <span className="text-[#725C3A]">|</span>
           <a href="#project" className="hover:text-white transition-colors">PROJECTS</a>
-          <span className="text-white/20">|</span>
+          <span className="text-[#725C3A]">|</span>
           <a href="#about" className="hover:text-white transition-colors">ABOUT</a>
-          <span className="text-white/20">|</span>
+          <span className="text-[#725C3A]">|</span>
           <a href="#dialogue" className="hover:text-white transition-colors">1:1 DIALOGUE</a>
         </div>
 
         {/* Email & Top Button */}
-        <div className="flex items-center gap-6 text-[11px] text-neutral-400">
+        <div className="flex items-center gap-6 text-[11px] text-[#E5E0D8]">
           <a
             href="mailto:csy50533394@gmail.com"
-            className="hover:text-white transition-colors text-white font-medium"
+            className="hover:text-[#D2AB80] transition-colors text-white font-medium"
           >
             csy50533394@gmail.com
           </a>
-          <span className="text-white/20">|</span>
+          <span className="text-[#725C3A]">|</span>
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-[#B3B792] hover:text-white transition-colors cursor-pointer"
           >
             <span>TOP</span>
-            <ArrowUp className="w-3.5 h-3.5" />
+            <ArrowUp className="w-3.5 h-3.5 text-[#809671]" />
           </button>
         </div>
 
@@ -59,3 +59,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+

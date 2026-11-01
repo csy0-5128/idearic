@@ -55,12 +55,12 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       {/* Top Admin Notice Bar (Visible only when Admin is logged in) */}
       {isAdmin && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-[#16181F] text-[#EFEBE4] border-b border-white/15 px-6 py-2 text-xs font-mono flex items-center justify-between">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-[#725C3A] text-[#F8F6F0] border-b border-[#E5E0D8]/40 px-6 py-2 text-xs font-mono flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-[#B3B792] animate-pulse"></span>
             <span className="font-bold tracking-wider text-white">IDEARIC ADMIN DESK ACTIVE</span>
             <span className="text-white/30 hidden sm:inline">|</span>
-            <span className="text-neutral-400 hidden sm:inline">
+            <span className="text-[#E5E0D8] hidden sm:inline">
               현재 모드: {viewMode === 'admin-desk' ? '관리자 대시보드' : '사용자(방문자) 화면'}
             </span>
           </div>
@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({
             {viewMode === 'admin-desk' ? (
               <button
                 onClick={() => onChangeViewMode('visitor')}
-                className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded text-[11px] text-white flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-3 py-1 bg-white/20 hover:bg-white/30 rounded text-[11px] text-white flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Eye className="w-3.5 h-3.5" />
                 <span>사용자 화면 보기</span>
@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
             ) : (
               <button
                 onClick={() => onChangeViewMode('admin-desk')}
-                className="px-3 py-1 bg-white text-black font-semibold hover:bg-neutral-200 rounded text-[11px] flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-3 py-1 bg-[#809671] text-white font-semibold hover:bg-[#6E8360] rounded text-[11px] flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
               >
                 <LayoutDashboard className="w-3.5 h-3.5" />
                 <span>관리자 데스크 열기</span>
@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={onToggleAdmin}
-              className="text-neutral-400 hover:text-white text-[11px] underline ml-2 cursor-pointer"
+              className="text-[#E5D2B8] hover:text-white text-[11px] underline ml-2 cursor-pointer"
             >
               로그아웃
             </button>
@@ -99,8 +99,8 @@ export const Header: React.FC<HeaderProps> = ({
           isAdmin ? 'top-9' : 'top-0'
         } ${
           isScrolled
-            ? 'bg-[#0D0E11]/90 backdrop-blur-md border-b border-white/10 text-white shadow-xl'
-            : 'bg-gradient-to-b from-[#0D0E11]/80 to-transparent border-b border-transparent text-white'
+            ? 'bg-[#F8F6F0]/95 backdrop-blur-md border-b border-[#E5E0D8] text-[#2A2215] shadow-xs'
+            : 'bg-[#F8F6F0]/80 backdrop-blur-xs border-b border-[#E5E0D8]/60 text-[#2A2215]'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
@@ -108,32 +108,32 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Left Brand Wordmark: Interlocking Wireframe Emblem + "IDEARIC ARCHITECTS" */}
           <a
             href="#hero"
-            className="flex items-center gap-3.5 text-white hover:opacity-90 transition-opacity group"
+            className="flex items-center gap-3.5 text-[#2A2215] hover:opacity-90 transition-opacity group"
           >
-            {/* Interlocking geometric rectangular lines logo like FORMA in reference */}
+            {/* Interlocking geometric rectangular lines logo in Carob */}
             <div className="w-7 h-7 relative flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7 stroke-white stroke-[1.25]">
+              <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7 stroke-[#725C3A] stroke-[1.5]">
                 <rect x="3" y="3" width="18" height="18" rx="0.5" />
-                <rect x="11" y="11" width="18" height="18" rx="0.5" className="stroke-white/80" />
+                <rect x="11" y="11" width="18" height="18" rx="0.5" className="stroke-[#809671]" />
               </svg>
             </div>
             <div className="flex flex-col">
-              <span className="font-condensed text-xl sm:text-2xl font-bold tracking-[0.2em] text-white leading-none">
+              <span className="font-condensed text-xl sm:text-2xl font-bold tracking-[0.2em] text-[#2A2215] leading-none">
                 IDEARIC
               </span>
-              <span className="text-[9px] font-mono tracking-[0.25em] text-neutral-400 uppercase leading-none mt-1">
+              <span className="text-[9px] font-mono tracking-[0.25em] text-[#809671] uppercase leading-none mt-1 font-semibold">
                 ARCHITECTS & PLANNING
               </span>
             </div>
           </a>
 
-          {/* Center/Right Nav Links matching reference layout */}
-          <nav className="hidden lg:flex items-center gap-8 text-[11px] font-mono tracking-[0.2em] text-neutral-300">
+          {/* Center/Right Nav Links */}
+          <nav className="hidden lg:flex items-center gap-8 text-[11px] font-mono tracking-[0.2em] text-[#5C5243]">
             {navLinks.map((link) => (
               <a 
                 key={link.href}
                 href={link.href} 
-                className="hover:text-white transition-colors uppercase whitespace-nowrap relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                className="hover:text-[#2A2215] transition-colors uppercase whitespace-nowrap relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[#809671] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
               >
                 {link.label}
               </a>
@@ -141,13 +141,13 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right Controls: 1:1 CTA Button, Admin Lock, and Menu */}
-          <div className="hidden sm:flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-3.5">
             <a
               href="#dialogue"
-              className="px-4 py-2 text-[11px] font-mono tracking-wider uppercase text-white arch-btn rounded-none flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2 text-[11px] font-mono tracking-wider uppercase text-white bg-[#809671] hover:bg-[#6E8360] flex items-center gap-2 cursor-pointer shadow-xs transition-colors"
             >
               <span>1:1 질문하기</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-neutral-300" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-white" />
             </a>
 
             {/* Admin Lock Button */}
@@ -161,8 +161,8 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               className={`p-2 border transition-all cursor-pointer ${
                 isAdmin
-                  ? 'bg-white text-black border-white shadow-sm'
-                  : 'bg-white/5 hover:bg-white/15 text-neutral-300 border-white/20'
+                  ? 'bg-[#725C3A] text-white border-[#725C3A] shadow-xs'
+                  : 'bg-[#E5E0D8]/60 hover:bg-[#E5E0D8] text-[#5C5243] border-[#725C3A]/20'
               }`}
               title={isAdmin ? '관리자 데스크 전환' : '관리자 로그인'}
             >
@@ -180,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setShowAuthModal(true);
                 }
               }}
-              className="p-2 text-white/80 hover:text-white border border-white/20"
+              className="p-2 text-[#5C5243] hover:text-[#2A2215] border border-[#725C3A]/30"
               title="관리자"
             >
               <Lock className="w-4 h-4" />
@@ -189,7 +189,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="메뉴 열기"
-              className="p-2 text-white hover:bg-white/10 transition-colors"
+              className="p-2 text-[#2A2215] hover:bg-[#E5E0D8] transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 stroke-[1.5]" />}
             </button>
@@ -198,14 +198,14 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#0D0E11]/98 backdrop-blur-2xl border-b border-white/10 px-8 py-8 text-white animate-in slide-in-from-top-2 duration-200">
+          <div className="lg:hidden bg-[#F8F6F0] border-b border-[#E5E0D8] px-8 py-8 text-[#2A2215] animate-in slide-in-from-top-2 duration-200 shadow-lg">
             <nav className="flex flex-col gap-5 text-xs font-mono tracking-[0.2em]">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-1 text-neutral-300 hover:text-white border-b border-white/10"
+                  className="py-1 text-[#5C5243] hover:text-[#2A2215] border-b border-[#E5E0D8]"
                 >
                   {link.label}
                 </a>
@@ -214,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <a
                   href="#dialogue"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3 text-xs font-mono tracking-wider uppercase text-center text-black bg-white flex items-center justify-center gap-2"
+                  className="w-full py-3 text-xs font-mono tracking-wider uppercase text-center text-white bg-[#809671] hover:bg-[#6E8360] flex items-center justify-center gap-2 shadow-xs"
                 >
                   <span>1:1 질문하기</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -229,9 +229,9 @@ export const Header: React.FC<HeaderProps> = ({
                       setShowAuthModal(true);
                     }
                   }}
-                  className="w-full py-2.5 text-xs font-mono tracking-wider text-neutral-300 border border-white/20 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 text-xs font-mono tracking-wider text-[#725C3A] border border-[#725C3A]/30 flex items-center justify-center gap-2"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                  <ShieldCheck className="w-3.5 h-3.5" />
                   <span>{isAdmin ? '관리자 데스크 전환' : '관리자(기획자) 로그인'}</span>
                 </button>
               </div>
@@ -243,33 +243,33 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Admin Passcode Modal */}
       {showAuthModal && (
         <div 
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-[#2A2215]/75 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
           onClick={() => setShowAuthModal(false)}
         >
           <div 
-            className="w-full max-w-sm bg-[#13151A] text-white p-7 border border-white/20 shadow-2xl"
+            className="w-full max-w-sm bg-[#F8F6F0] text-[#2A2215] p-7 border border-[#725C3A]/30 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/15">
-              <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-white uppercase">
-                <ShieldCheck className="w-4 h-4 text-white" />
+            <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E5E0D8]">
+              <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[#725C3A] uppercase font-bold">
+                <ShieldCheck className="w-4 h-4 text-[#809671]" />
                 <span>IDEARIC ADMIN AUTH</span>
               </div>
               <button 
                 onClick={() => setShowAuthModal(false)}
-                className="text-neutral-400 hover:text-white"
+                className="text-[#5C5243] hover:text-[#2A2215]"
               >
                 ✕
               </button>
             </div>
 
-            <p className="text-xs text-neutral-400 font-mono mb-5 leading-relaxed">
+            <p className="text-xs text-[#5C5243] font-mono mb-5 leading-relaxed">
               기획자 관리자 모드로 진입하여 접수된 1:1 질문을 확인하고 공식 답변을 발행합니다.
             </p>
 
             <form onSubmit={handleAdminAuthSubmit} className="space-y-4 font-mono text-xs">
               <div>
-                <label className="block text-neutral-400 mb-1.5 uppercase text-[10px] tracking-wider">
+                <label className="block text-[#5C5243] mb-1.5 uppercase text-[10px] tracking-wider font-semibold">
                   관리자 비밀번호 (기본값: admin)
                 </label>
                 <input
@@ -278,18 +278,18 @@ export const Header: React.FC<HeaderProps> = ({
                   placeholder="admin 입력"
                   value={inputPasscode}
                   onChange={(e) => setInputPasscode(e.target.value)}
-                  className="w-full p-3 bg-black/60 border border-white/25 text-white focus:outline-hidden focus:border-white"
+                  className="w-full p-3 bg-white border border-[#E5E0D8] text-[#2A2215] focus:outline-hidden focus:border-[#809671]"
                 />
               </div>
 
               {authError && (
-                <p className="text-xs text-red-400 font-mono">{authError}</p>
+                <p className="text-xs text-red-600 font-mono">{authError}</p>
               )}
 
               <div className="pt-2 flex flex-col gap-2.5">
                 <button
                   type="submit"
-                  className="w-full py-3 bg-white text-black font-mono font-bold tracking-wider uppercase hover:bg-neutral-200 shadow-md transition-all cursor-pointer"
+                  className="w-full py-3 bg-[#809671] hover:bg-[#6E8360] text-white font-mono font-bold tracking-wider uppercase shadow-md transition-all cursor-pointer"
                 >
                   인증하고 관리자 모드 진입
                 </button>
@@ -300,7 +300,7 @@ export const Header: React.FC<HeaderProps> = ({
                     onToggleAdmin();
                     setShowAuthModal(false);
                   }}
-                  className="w-full py-2.5 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/15 transition-all cursor-pointer"
+                  className="w-full py-2.5 bg-[#E5E0D8]/60 hover:bg-[#E5E0D8] text-[#5C5243] border border-[#725C3A]/20 transition-all cursor-pointer"
                 >
                   원클릭 바로 체험 진입
                 </button>

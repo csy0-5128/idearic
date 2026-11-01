@@ -132,20 +132,20 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
   };
 
   return (
-    <div className="bg-[#181A1F] text-white min-h-[85vh] py-10 px-4 sm:px-8 border-b border-white/10">
+    <div className="bg-[#2A2215] text-[#F8F6F0] min-h-[85vh] py-10 px-4 sm:px-8 border-b border-[#725C3A]/30">
       <div className="max-w-7xl mx-auto">
         
         {/* Top Control Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 mb-8 border-b border-white/10">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 mb-8 border-b border-[#725C3A]/30">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-neutral-400 uppercase mb-1">
-              <ShieldCheck className="w-4 h-4 stroke-[2] text-white" />
+            <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[#B3B792] uppercase mb-1">
+              <ShieldCheck className="w-4 h-4 stroke-[2] text-[#809671]" />
               <span>IDEARIC ADMIN DESK · 기획자 전용 관리 화면</span>
             </div>
-            <h1 className="font-condensed text-3xl sm:text-4xl font-bold tracking-wide text-white uppercase">
+            <h1 className="font-condensed text-3xl sm:text-4xl font-bold tracking-wide text-[#F8F6F0] uppercase">
               아이디어 질문 & 기획 피드백 관리 데스크
             </h1>
-            <p className="text-xs font-mono text-neutral-400 mt-1">
+            <p className="text-xs font-mono text-[#E5D2B8] mt-1">
               방문자들이 남긴 1:1 고민과 질문을 검토하고, 기획자의 철학과 도면적 시작점을 직접 답변으로 발행합니다.
             </p>
           </div>
@@ -153,14 +153,14 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={onSwitchToUserView}
-              className="px-4 py-2.5 text-xs font-mono font-medium text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-none transition-all flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 text-xs font-mono font-medium text-[#F8F6F0] bg-white/10 hover:bg-white/15 border border-[#725C3A]/50 transition-all flex items-center gap-2 cursor-pointer"
             >
-              <Eye className="w-3.5 h-3.5 text-white" />
+              <Eye className="w-3.5 h-3.5 text-[#B3B792]" />
               <span>사용자 화면으로 보기</span>
             </button>
             <button
               onClick={onExitAdmin}
-              className="px-4 py-2.5 text-xs font-mono font-medium text-neutral-300 hover:text-white bg-red-950/40 hover:bg-red-900/60 border border-red-800/40 rounded-xl transition-all cursor-pointer"
+              className="px-4 py-2.5 text-xs font-mono font-medium text-[#E5D2B8] hover:text-white bg-[#725C3A]/40 hover:bg-[#725C3A]/60 border border-[#725C3A] transition-all cursor-pointer"
             >
               관리자 모드 로그아웃
             </button>
@@ -169,22 +169,22 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
 
         {/* Overview Stats KPIs */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-            <span className="text-[11px] font-mono text-neutral-400 block mb-1">총 접수 질문</span>
+          <div className="bg-[#1F1910] border border-[#725C3A]/40 p-4">
+            <span className="text-[11px] font-mono text-[#B3B792] block mb-1">총 접수 질문</span>
             <span className="font-syne text-2xl sm:text-3xl font-bold text-white">{sessions.length}건</span>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-            <span className="text-[11px] font-mono text-[#C49B74] block mb-1">답변 대기 중</span>
-            <span className="font-syne text-2xl sm:text-3xl font-bold text-[#C49B74]">{pendingCount}건</span>
+          <div className="bg-[#1F1910] border border-[#725C3A]/40 p-4">
+            <span className="text-[11px] font-mono text-[#D2AB80] block mb-1">답변 대기 중</span>
+            <span className="font-syne text-2xl sm:text-3xl font-bold text-[#D2AB80]">{pendingCount}건</span>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-            <span className="text-[11px] font-mono text-emerald-400 block mb-1">답변 완료</span>
-            <span className="font-syne text-2xl sm:text-3xl font-bold text-emerald-400">{answeredCount}건</span>
+          <div className="bg-[#1F1910] border border-[#725C3A]/40 p-4">
+            <span className="text-[11px] font-mono text-[#809671] block mb-1">답변 완료</span>
+            <span className="font-syne text-2xl sm:text-3xl font-bold text-[#809671]">{answeredCount}건</span>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-            <span className="text-[11px] font-mono text-neutral-400 block mb-1">관리자 인증 상태</span>
+          <div className="bg-[#1F1910] border border-[#725C3A]/40 p-4">
+            <span className="text-[11px] font-mono text-[#E5D2B8] block mb-1">관리자 인증 상태</span>
             <span className="font-mono text-sm font-semibold text-white flex items-center gap-1.5 mt-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-[#809671] animate-pulse"></span>
               인증됨 (기획자 본인)
             </span>
           </div>
@@ -197,27 +197,27 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
           <div className="lg:col-span-5 flex flex-col gap-3">
             
             {/* Filter Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-white/5 rounded-xl border border-white/10 text-xs font-mono">
+            <div className="flex items-center gap-1.5 p-1 bg-[#1F1910] border border-[#725C3A]/40 text-xs font-mono">
               <button
                 onClick={() => setFilterStatus('all')}
-                className={`flex-1 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                  filterStatus === 'all' ? 'bg-white/20 text-white font-semibold' : 'text-neutral-400 hover:text-white'
+                className={`flex-1 py-1.5 transition-colors cursor-pointer ${
+                  filterStatus === 'all' ? 'bg-[#809671] text-white font-semibold' : 'text-[#E5D2B8] hover:text-white'
                 }`}
               >
                 전체 ({sessions.length})
               </button>
               <button
                 onClick={() => setFilterStatus('new')}
-                className={`flex-1 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                  filterStatus === 'new' ? 'bg-[#C49B74] text-white font-semibold' : 'text-neutral-400 hover:text-white'
+                className={`flex-1 py-1.5 transition-colors cursor-pointer ${
+                  filterStatus === 'new' ? 'bg-[#D2AB80] text-[#2A2215] font-bold' : 'text-[#E5D2B8] hover:text-white'
                 }`}
               >
                 대기 중 ({pendingCount})
               </button>
               <button
                 onClick={() => setFilterStatus('answered')}
-                className={`flex-1 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                  filterStatus === 'answered' ? 'bg-white/20 text-white font-semibold' : 'text-neutral-400 hover:text-white'
+                className={`flex-1 py-1.5 transition-colors cursor-pointer ${
+                  filterStatus === 'answered' ? 'bg-[#809671] text-white font-semibold' : 'text-[#E5D2B8] hover:text-white'
                 }`}
               >
                 답변 완료 ({answeredCount})
@@ -236,21 +236,21 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                       setReplyText('');
                       setInsightTags([]);
                     }}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer text-left ${
+                    className={`p-4 border transition-all cursor-pointer text-left ${
                       isSelected
-                        ? 'bg-white/15 border-[#C49B74] shadow-md ring-1 ring-[#C49B74]'
-                        : 'bg-white/5 hover:bg-white/10 border-white/10'
+                        ? 'bg-[#362C1E] border-[#D2AB80] shadow-md ring-1 ring-[#D2AB80]'
+                        : 'bg-[#1F1910] hover:bg-[#251E14] border-[#725C3A]/40'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-2">
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+                      <span className={`text-[10px] font-mono px-2 py-0.5 ${
                         session.status === '답변 완료'
-                          ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                          : 'bg-[#C49B74]/20 text-[#C49B74] border border-[#C49B74]/40 font-semibold'
+                          ? 'bg-[#809671]/20 text-[#809671] border border-[#809671]/40'
+                          : 'bg-[#D2AB80]/20 text-[#D2AB80] border border-[#D2AB80]/40 font-semibold'
                       }`}>
                         {session.status}
                       </span>
-                      <span className="text-[10px] font-mono text-neutral-400">
+                      <span className="text-[10px] font-mono text-[#B3B792]">
                         {session.createdAt}
                       </span>
                     </div>
@@ -259,13 +259,13 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                       {session.title}
                     </h4>
 
-                    <p className="text-[11px] font-mono text-neutral-400 line-clamp-1 mb-2">
+                    <p className="text-[11px] font-mono text-[#E5D2B8] line-clamp-1 mb-2">
                       {session.stage}
                     </p>
 
-                    <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400 pt-2 border-t border-white/10">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#B3B792] pt-2 border-t border-[#725C3A]/30">
                       <span>의뢰자: {session.visitorName}</span>
-                      <span className="flex items-center gap-1 text-[#C49B74]">
+                      <span className="flex items-center gap-1 text-[#D2AB80]">
                         메시지 {session.messages.length}개
                         <ChevronRight className="w-3 h-3" />
                       </span>
@@ -286,15 +286,15 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
           {/* Right Column: Detailed Inspector & Response Console (7 cols) */}
           <div className="lg:col-span-7 flex flex-col gap-4">
             {selectedSession ? (
-              <div className="bg-white/5 rounded-3xl border border-white/10 overflow-hidden">
+              <div className="bg-[#1F1910] border border-[#725C3A]/40 overflow-hidden">
                 
                 {/* Header */}
-                <div className="p-6 bg-white/5 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="p-6 bg-[#251E14] border-b border-[#725C3A]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1 text-xs font-mono">
-                      <span className="text-[#C49B74] font-semibold">{selectedSession.stage}</span>
-                      <span className="text-white/20">·</span>
-                      <span className="text-neutral-400">의뢰자: {selectedSession.visitorName}</span>
+                      <span className="text-[#D2AB80] font-semibold">{selectedSession.stage}</span>
+                      <span className="text-[#725C3A]">·</span>
+                      <span className="text-[#B3B792]">의뢰자: {selectedSession.visitorName}</span>
                     </div>
                     <h3 className="text-base sm:text-lg font-bold text-white">
                       {selectedSession.title}
@@ -306,7 +306,7 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                     <select
                       value={selectedSession.status}
                       onChange={(e) => handleChangeStatus(e.target.value as any)}
-                      className="bg-black/40 border border-white/20 text-xs font-mono text-white px-3 py-1.5 rounded-lg focus:outline-hidden cursor-pointer"
+                      className="bg-[#151009] border border-[#725C3A]/60 text-xs font-mono text-[#E5E0D8] px-3 py-1.5 focus:outline-hidden cursor-pointer"
                     >
                       <option value="새 질문">상태: 새 질문</option>
                       <option value="진행 중">상태: 진행 중</option>
@@ -315,7 +315,7 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
 
                     <button
                       onClick={() => handleDeleteSession(selectedSession.id)}
-                      className="p-2 text-neutral-400 hover:text-red-400 hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+                      className="p-2 text-[#B3B792] hover:text-red-400 hover:bg-[#725C3A]/30 transition-colors cursor-pointer"
                       title="질문 삭제"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -324,34 +324,34 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                 </div>
 
                 {/* Conversation History */}
-                <div className="p-6 space-y-4 max-h-[340px] overflow-y-auto bg-black/20">
+                <div className="p-6 space-y-4 max-h-[340px] overflow-y-auto bg-[#18120A]/70">
                   {selectedSession.messages.map((m) => {
                     const isPlanner = m.sender === 'planner';
                     return (
                       <div
                         key={m.id}
-                        className={`p-4 rounded-xl border ${
+                        className={`p-4 border ${
                           isPlanner
-                            ? 'bg-[#C49B74]/10 border-[#C49B74]/30 text-neutral-200'
-                            : 'bg-white/10 border-white/10 text-white'
+                            ? 'bg-[#362C1E]/80 border-[#809671]/40 text-[#F8F6F0]'
+                            : 'bg-[#251E14] border-[#725C3A]/30 text-[#E5E0D8]'
                         }`}
                       >
                         <div className="flex items-center justify-between text-xs font-mono mb-2">
-                          <span className={`font-semibold ${isPlanner ? 'text-[#C49B74]' : 'text-neutral-300'}`}>
+                          <span className={`font-semibold ${isPlanner ? 'text-[#809671]' : 'text-[#D2AB80]'}`}>
                             {m.senderName} {isPlanner ? '(관리자/기획자 본인)' : '(방문자)'}
                           </span>
-                          <span className="text-[10px] text-neutral-400">{m.timestamp}</span>
+                          <span className="text-[10px] text-[#B3B792]">{m.timestamp}</span>
                         </div>
-                        <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-line">
+                        <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-line text-[#E5E0D8]">
                           {m.content}
                         </p>
 
                         {m.keyInsights && m.keyInsights.length > 0 && (
-                          <div className="mt-3 pt-2.5 border-t border-white/10 flex flex-wrap gap-1.5">
+                          <div className="mt-3 pt-2.5 border-t border-[#725C3A]/30 flex flex-wrap gap-1.5">
                             {m.keyInsights.map((tag, i) => (
                               <span
                                 key={i}
-                                className="text-[10px] font-mono bg-black/40 text-[#C49B74] px-2 py-0.5 rounded border border-[#C49B74]/30"
+                                className="text-[10px] font-mono bg-[#809671]/20 text-[#809671] px-2 py-0.5 border border-[#809671]/40"
                               >
                                 ✓ {tag}
                               </span>
@@ -364,18 +364,18 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                 </div>
 
                 {/* Response Creation Area */}
-                <form onSubmit={handlePostAnswer} className="p-6 bg-white/5 border-t border-white/10 space-y-4">
+                <form onSubmit={handlePostAnswer} className="p-6 bg-[#251E14] border-t border-[#725C3A]/40 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-[#C49B74] uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5" />
+                    <span className="text-xs font-mono font-bold text-[#D2AB80] uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#809671]" />
                       <span>기획자 공식 답변 작성 (Official Response)</span>
                     </span>
                     <button
                       type="button"
                       onClick={handleOpenEmailToVisitor}
-                      className="text-[11px] font-mono text-neutral-400 hover:text-white flex items-center gap-1 underline underline-offset-2"
+                      className="text-[11px] font-mono text-[#B3B792] hover:text-white flex items-center gap-1 underline underline-offset-2"
                     >
-                      <Mail className="w-3 h-3" />
+                      <Mail className="w-3 h-3 text-[#D2AB80]" />
                       <span>이메일로도 전달하기</span>
                     </button>
                   </div>
@@ -386,12 +386,12 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     placeholder="이 질문에 대해 기획자 관점에서 제안하는 철학적 개념, 리서치 근거, 구체적인 도면/공간적 시작점을 자세히 작성해 주세요..."
-                    className="w-full p-3 bg-black/40 border border-white/15 rounded-xl text-xs sm:text-sm text-white focus:outline-hidden focus:border-[#C49B74] resize-none"
+                    className="w-full p-3 bg-[#18120A] border border-[#725C3A]/50 text-xs sm:text-sm text-[#F8F6F0] focus:outline-hidden focus:border-[#809671] resize-none placeholder:text-[#725C3A]"
                   />
 
                   {/* Add Key Foundations (Insight Tags) */}
                   <div>
-                    <label className="block text-[11px] font-mono text-neutral-400 mb-1.5">
+                    <label className="block text-[11px] font-mono text-[#B3B792] mb-1.5">
                       핵심 시작점 키워드 태그 추가 (Key Foundations)
                     </label>
                     <div className="flex gap-2">
@@ -406,14 +406,14 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                           }
                         }}
                         placeholder="예: 대지 절토 최소화, 상부 지붕-테라스 일체화"
-                        className="flex-1 p-2.5 bg-black/40 border border-white/15 rounded-xl text-xs text-white focus:outline-hidden focus:border-[#C49B74]"
+                        className="flex-1 p-2.5 bg-[#18120A] border border-[#725C3A]/50 text-xs text-[#F8F6F0] focus:outline-hidden focus:border-[#809671] placeholder:text-[#725C3A]"
                       />
                       <button
                         type="button"
                         onClick={handleAddTag}
-                        className="px-4 py-2 bg-white/10 hover:bg-white/20 text-xs font-mono text-white rounded-xl border border-white/20 flex items-center gap-1 cursor-pointer"
+                        className="px-4 py-2 bg-[#725C3A]/40 hover:bg-[#725C3A]/60 text-xs font-mono text-[#E5D2B8] border border-[#725C3A] flex items-center gap-1 cursor-pointer transition-colors"
                       >
-                        <Plus className="w-3.5 h-3.5" />
+                        <Plus className="w-3.5 h-3.5 text-[#809671]" />
                         <span>태그 추가</span>
                       </button>
                     </div>
@@ -423,13 +423,13 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                         {insightTags.map((tag) => (
                           <span
                             key={tag}
-                            className="inline-flex items-center gap-1 text-xs font-mono bg-[#C49B74]/20 text-[#C49B74] border border-[#C49B74]/40 px-2.5 py-1 rounded-lg"
+                            className="inline-flex items-center gap-1 text-xs font-mono bg-[#809671]/20 text-[#809671] border border-[#809671]/40 px-2.5 py-1"
                           >
                             <span>✓ {tag}</span>
                             <button
                               type="button"
                               onClick={() => handleRemoveTag(tag)}
-                              className="hover:text-white"
+                              className="hover:text-white ml-1"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -443,7 +443,7 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
                     <button
                       type="submit"
                       disabled={!replyText.trim()}
-                      className="px-6 py-2.5 bg-[#C49B74] hover:bg-[#b08760] disabled:opacity-40 disabled:hover:bg-[#C49B74] text-xs font-mono font-bold text-white rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                      className="px-6 py-2.5 bg-[#809671] hover:bg-[#6E8360] disabled:opacity-40 disabled:hover:bg-[#809671] text-xs font-mono font-bold text-white shadow-md transition-all flex items-center gap-2 cursor-pointer uppercase tracking-wider"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>답변 등록 및 완료 처리</span>
@@ -453,7 +453,7 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
 
               </div>
             ) : (
-              <div className="p-12 text-center text-xs font-mono text-neutral-400 bg-white/5 border border-white/10 rounded-3xl">
+              <div className="p-12 text-center text-xs font-mono text-[#B3B792] bg-[#1F1910] border border-[#725C3A]/40">
                 선택된 질문 세션이 없습니다.
               </div>
             )}

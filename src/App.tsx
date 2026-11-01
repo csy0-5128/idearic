@@ -112,7 +112,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col bg-[#0D0E11] text-[#E2E4E9] selection:bg-white selection:text-black font-sans ${isAdmin ? 'pt-8' : ''}`}>
+    <div className={`min-h-screen flex flex-col bg-[#F8F6F0] text-[#2A2215] selection:bg-[#809671] selection:text-white font-sans ${isAdmin ? 'pt-8' : ''}`}>
       <Header 
         onContactClick={scrollToDialogue}
         isAdmin={isAdmin}

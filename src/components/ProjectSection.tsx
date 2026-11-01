@@ -5,22 +5,16 @@ import {
   ZoomOut, 
   RotateCcw, 
   X, 
-  Trees, 
-  Home, 
-  Wind, 
-  Compass, 
   FileDown, 
-  Layers, 
-  CheckCircle2,
-  ChevronRight,
   ExternalLink,
-  ArrowRight
+  ArrowRight,
+  CheckCircle2
 } from 'lucide-react';
 import { DrawingSheet } from '../types/dialogue';
 
 export const ProjectSection: React.FC = () => {
   // 6 Authentic Drawing Sheets from User's Uploaded PDF
-  const drawingSheets = [
+  const drawingSheets: DrawingSheet[] = [
     {
       id: 'section',
       name: '단면도 (대표 도면)',
@@ -82,7 +76,7 @@ export const ProjectSection: React.FC = () => {
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.35, 0.65));
   const handleResetZoom = () => setZoomLevel(1);
 
-  // 3 Selected Project Focus Cards matching the 3-column grid in reference image
+  // 3 Selected Focus Cards in Swatch Palette
   const showcaseCards = [
     {
       num: '01',
@@ -90,6 +84,7 @@ export const ProjectSection: React.FC = () => {
       title: '단면도 (대표 도면)',
       subtitle: '경사지 생태 건축 기본 설계 · 수목 보존 및 테라스 일체화',
       tag: 'SECTION DRAWING',
+      accentColor: '#809671', // Matcha
       image: '/assets/drawings/drawing_page_02.png'
     },
     {
@@ -98,6 +93,7 @@ export const ProjectSection: React.FC = () => {
       title: '대지 배치도',
       subtitle: '경사지 등고선 분석 및 도로망 순응형 입체 배치 계획',
       tag: 'SITE CONTOUR PLAN',
+      accentColor: '#D2AB80', // Chai
       image: '/assets/drawings/drawing_page_01.png'
     },
     {
@@ -106,29 +102,30 @@ export const ProjectSection: React.FC = () => {
       title: '입체 공간 스터디 모형',
       subtitle: '경사면 테라스와 캔틸레버 옥상 녹화의 입체 볼륨 스터디',
       tag: 'PHYSICAL STUDY MODEL',
+      accentColor: '#725C3A', // Carob
       image: '/src/assets/images/hillside_architecture_model_1793260635825.jpg'
     }
   ];
 
   return (
-    <section id="project" className="py-24 sm:py-32 bg-[#0D0E11] text-white border-b border-white/10 relative overflow-hidden">
+    <section id="project" className="py-24 sm:py-32 bg-[#F2EFE8] text-[#2A2215] border-b border-[#E5E0D8] relative overflow-hidden">
       
-      {/* Background Dark Architectural Grid */}
-      <div className="absolute inset-0 architectural-dark-grid opacity-30 pointer-events-none"></div>
+      {/* Background Subtle Earth Pattern */}
+      <div className="absolute inset-0 architectural-earth-grid opacity-60 pointer-events-none"></div>
 
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
         
         {/* Section Header Strip: SELECTED WORK ──────── VIEW ALL PROJECTS → */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-14 pb-4 border-b border-white/10 text-xs font-mono tracking-[0.25em] uppercase text-neutral-400">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-14 pb-4 border-b border-[#E5E0D8] text-xs font-mono tracking-[0.25em] uppercase text-[#725C3A]">
           <div className="flex items-center gap-4">
-            <span className="text-white font-bold">SELECTED WORK</span>
-            <span className="w-16 sm:w-24 h-px bg-white/20"></span>
-            <span className="text-neutral-500 hidden md:inline">AUTHENTIC ARCHITECTURAL SCHEMATICS</span>
+            <span className="font-bold text-[#2A2215]">SELECTED WORK</span>
+            <span className="w-16 sm:w-24 h-px bg-[#725C3A]/30"></span>
+            <span className="text-[#809671] font-semibold hidden md:inline">AUTHENTIC ARCHITECTURAL SCHEMATICS</span>
           </div>
 
           <a
             href="#blueprint-details"
-            className="hover:text-white transition-colors flex items-center gap-2 text-white font-medium group"
+            className="hover:text-[#2A2215] transition-colors flex items-center gap-2 text-[#725C3A] font-semibold group"
           >
             <span>VIEW ALL 6 DRAWING SHEETS</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -137,38 +134,38 @@ export const ProjectSection: React.FC = () => {
 
         {/* Project Title & Manifesto Card (Verbatim User Prompt Requirements) */}
         <div className="max-w-4xl mb-16">
-          <div className="flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] text-neutral-400 uppercase mb-3">
+          <div className="flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] text-[#809671] uppercase mb-3 font-semibold">
             <span>REPRESENTATIVE PROJECT</span>
-            <span className="text-white/30">/</span>
-            <span className="text-white font-medium">바람이 통하는 집</span>
+            <span className="text-[#B3B792]">/</span>
+            <span className="text-[#725C3A] font-bold">바람이 통하는 집</span>
           </div>
 
-          <h2 className="font-condensed text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white uppercase leading-none mb-6">
+          <h2 className="font-condensed text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#2A2215] uppercase leading-none mb-6">
             HOUSE WHERE THE WIND PASSES.
           </h2>
 
-          <p className="text-base sm:text-lg text-neutral-300 font-light leading-relaxed mb-6 text-balance">
+          <p className="text-base sm:text-lg text-[#5C5243] font-normal leading-relaxed mb-6 text-balance">
             경사지 나무의 생태적 특성과 관련 논문을 바탕으로, 나무에게는 수평적 성장 환경을 제공하고 인간에게는 테라스와 지붕이 되는 공간을 설계한 건축 기본 설계 프로젝트. (첨부된 단면도 도면 기반 구조 반영)
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs font-mono text-neutral-400">
+          <div className="flex flex-wrap items-center gap-6 text-xs font-mono text-[#5C5243]">
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
-              <span>검증된 실제 건축 도면집 (PDF 총 6면)</span>
+              <span className="w-2 h-2 rounded-full bg-[#809671]"></span>
+              <span className="font-semibold text-[#2A2215]">검증된 실제 건축 도면집 (PDF 총 6면)</span>
             </span>
             <a
               href={pdfFilePath}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:underline flex items-center gap-1.5 font-semibold"
+              className="text-[#725C3A] hover:text-[#2A2215] hover:underline flex items-center gap-1.5 font-bold"
             >
-              <FileDown className="w-3.5 h-3.5 text-white" />
+              <FileDown className="w-3.5 h-3.5 text-[#809671]" />
               <span>원본 PDF 열기 / 다운로드</span>
             </a>
           </div>
         </div>
 
-        {/* 3-Column Architectural Cards Grid (matching the reference image layout) */}
+        {/* 3-Column Architectural Cards Grid in Swatch Harmony */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {showcaseCards.map((card) => (
             <div
@@ -179,38 +176,39 @@ export const ProjectSection: React.FC = () => {
                 }
                 setIsLightboxOpen(true);
               }}
-              className="group flex flex-col cursor-pointer"
+              className="group flex flex-col cursor-pointer bg-white p-5 border border-[#E5E0D8] rounded-2xl shadow-xs hover:border-[#725C3A]/50 transition-all"
             >
               {/* Media Container */}
-              <div className="relative aspect-4/3 overflow-hidden bg-[#14161C] border border-white/15 mb-4 group-hover:border-white/50 transition-colors">
+              <div className="relative aspect-4/3 overflow-hidden bg-[#F8F6F0] border border-[#E5E0D8] rounded-xl mb-4">
                 <img
                   src={card.image}
                   alt={card.title}
-                  className="w-full h-full object-contain p-4 filter contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
-                <div className="absolute top-3 right-3 text-[10px] font-mono tracking-wider bg-black/70 backdrop-blur-xs px-2 py-1 text-neutral-300 border border-white/10">
+                <div className="absolute top-3 right-3 text-[10px] font-mono tracking-wider px-2 py-1 text-white font-semibold rounded-md shadow-2xs"
+                  style={{ backgroundColor: card.accentColor }}
+                >
                   {card.tag}
                 </div>
               </div>
 
-              {/* Card Meta & Typography matching reference */}
+              {/* Card Meta & Typography */}
               <div className="flex flex-col">
-                <span className="text-xs font-mono text-neutral-500 tracking-widest mb-1">
+                <span className="text-xs font-mono text-[#725C3A] font-bold tracking-widest mb-1">
                   {card.num}
                 </span>
 
-                <h3 className="font-condensed text-2xl font-bold text-white tracking-wide uppercase group-hover:text-neutral-200 transition-colors">
+                <h3 className="font-condensed text-2xl font-bold text-[#2A2215] tracking-wide uppercase group-hover:text-[#725C3A] transition-colors">
                   {card.title}
                 </h3>
 
-                <p className="text-xs font-mono text-neutral-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-xs font-mono text-[#5C5243] mt-1.5 line-clamp-2 leading-relaxed">
                   {card.subtitle}
                 </p>
 
-                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+                <div className="mt-4 pt-3 border-t border-[#E5E0D8] flex items-center justify-between text-xs font-mono tracking-wider text-[#725C3A] group-hover:text-[#2A2215] font-bold transition-colors">
                   <span>VIEW INSPECTION</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform text-[#809671]" />
                 </div>
               </div>
             </div>
@@ -218,28 +216,28 @@ export const ProjectSection: React.FC = () => {
         </div>
 
         {/* Detailed Drawing Sheet Selector & High-Resolution Viewer */}
-        <div id="blueprint-details" className="pt-10 border-t border-white/10">
+        <div id="blueprint-details" className="pt-10 border-t border-[#E5E0D8]">
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <span className="text-[10px] font-mono tracking-[0.25em] text-neutral-400 uppercase block mb-1">
+              <span className="text-[10px] font-mono tracking-[0.25em] text-[#809671] uppercase block mb-1 font-bold">
                 INTERACTIVE DRAWING ARCHIVE
               </span>
-              <h3 className="font-condensed text-2xl sm:text-3xl font-bold text-white uppercase tracking-wider">
+              <h3 className="font-condensed text-2xl sm:text-3xl font-bold text-[#2A2215] uppercase tracking-wider">
                 실제 기본 설계 도면 시트 탐색기 (6 SHEETS)
               </h3>
             </div>
 
             <button
               onClick={() => setIsLightboxOpen(true)}
-              className="self-start sm:self-auto px-4 py-2 text-xs font-mono text-white arch-btn flex items-center gap-2 cursor-pointer"
+              className="self-start sm:self-auto px-4 py-2 text-xs font-mono arch-btn-earth flex items-center gap-2 cursor-pointer font-semibold rounded-lg"
             >
-              <Maximize2 className="w-3.5 h-3.5" />
+              <Maximize2 className="w-3.5 h-3.5 text-[#809671]" />
               <span>전체화면 정밀 검토</span>
             </button>
           </div>
 
-          {/* Sheets Navigation Bar */}
+          {/* Sheets Navigation Bar in Matcha and Almond */}
           <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-thin">
             {drawingSheets.map((sheet) => {
               const isSelected = sheet.id === selectedSheetId;
@@ -250,13 +248,13 @@ export const ProjectSection: React.FC = () => {
                     setSelectedSheetId(sheet.id);
                     handleResetZoom();
                   }}
-                  className={`px-4 py-2.5 text-xs font-mono tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-2.5 border ${
+                  className={`px-4 py-2.5 text-xs font-mono tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-2.5 rounded-xl border ${
                     isSelected
-                      ? 'bg-white text-black border-white font-bold shadow-md'
-                      : 'bg-[#14161C] hover:bg-[#1A1D24] text-neutral-400 hover:text-white border-white/15'
+                      ? 'bg-[#809671] text-white border-[#809671] font-bold shadow-xs'
+                      : 'bg-white hover:bg-[#E5E0D8] text-[#5C5243] hover:text-[#2A2215] border-[#E5E0D8]'
                   }`}
                 >
-                  <span className="text-[10px] opacity-70">P.0{sheet.pageNumber}</span>
+                  <span className="text-[10px] opacity-80">P.0{sheet.pageNumber}</span>
                   <span>{sheet.name}</span>
                 </button>
               );
@@ -264,32 +262,32 @@ export const ProjectSection: React.FC = () => {
           </div>
 
           {/* Active Sheet Display Canvas */}
-          <div className="relative aspect-16/9 rounded-none overflow-hidden bg-[#12141A] border border-white/15 p-4 sm:p-8 flex items-center justify-center cursor-zoom-in group mb-8 shadow-2xl">
+          <div className="relative aspect-16/9 rounded-2xl overflow-hidden bg-white border border-[#E5E0D8] p-4 sm:p-8 flex items-center justify-center cursor-zoom-in group mb-8 shadow-sm">
             <img
               src={currentSheet.imageSrc}
               alt={currentSheet.name}
               onClick={() => setIsLightboxOpen(true)}
-              className="w-full h-full object-contain filter contrast-[1.08] transition-transform duration-500 group-hover:scale-[1.01]"
+              className="w-full h-full object-contain filter contrast-[1.05] transition-transform duration-500 group-hover:scale-[1.01]"
             />
 
             {/* Click to expand overlay */}
             <div 
               onClick={() => setIsLightboxOpen(true)}
-              className="absolute bottom-5 right-5 bg-black/85 backdrop-blur-md text-white text-[11px] font-mono tracking-wider px-4 py-2 border border-white/20 flex items-center gap-2 transition-all group-hover:border-white"
+              className="absolute bottom-5 right-5 bg-[#2A2215]/85 backdrop-blur-md text-white text-[11px] font-mono tracking-wider px-4 py-2 rounded-xl border border-white/20 flex items-center gap-2 transition-all group-hover:bg-[#2A2215]"
             >
-              <Maximize2 className="w-3.5 h-3.5" />
+              <Maximize2 className="w-3.5 h-3.5 text-[#B3B792]" />
               <span>도면 클릭 시 돋보기 확대 검토</span>
             </div>
           </div>
 
           {/* Active Sheet Annotation Strip */}
-          <div className="p-6 bg-[#14161C] border border-white/15 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-mono">
+          <div className="p-6 bg-white border border-[#E5E0D8] rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-mono shadow-2xs">
             <div>
-              <span className="text-neutral-500 block text-[10px] uppercase tracking-wider mb-1">
+              <span className="text-[#809671] block text-[10px] uppercase tracking-wider mb-1 font-bold">
                 SHEET 0{currentSheet.pageNumber} / {currentSheet.category}
               </span>
-              <p className="text-white font-semibold text-sm">
-                {currentSheet.name} : <span className="font-normal text-neutral-300">{currentSheet.desc}</span>
+              <p className="text-[#2A2215] font-semibold text-sm">
+                {currentSheet.name} : <span className="font-normal text-[#5C5243]">{currentSheet.desc}</span>
               </p>
             </div>
 
@@ -298,10 +296,10 @@ export const ProjectSection: React.FC = () => {
                 href={pdfFilePath}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:underline flex items-center gap-1.5"
+                className="text-[#725C3A] hover:text-[#2A2215] hover:underline flex items-center gap-1.5 font-bold"
               >
                 <span>원본 PDF 전체 보기</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#809671]" />
               </a>
             </div>
           </div>
@@ -313,7 +311,7 @@ export const ProjectSection: React.FC = () => {
       {/* High-Resolution Fullscreen Lightbox Modal */}
       {isLightboxOpen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-6 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-[#2A2215]/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-6 animate-in fade-in duration-200"
           onClick={() => setIsLightboxOpen(false)}
         >
           {/* Modal Header */}
@@ -322,7 +320,7 @@ export const ProjectSection: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div>
-              <span className="text-[10px] font-mono tracking-[0.25em] text-neutral-400 uppercase block">
+              <span className="text-[10px] font-mono tracking-[0.25em] text-[#B3B792] uppercase block font-bold">
                 AUTHENTIC ARCHITECTURAL INSPECTOR
               </span>
               <h3 className="font-condensed text-xl sm:text-2xl font-bold text-white tracking-wide uppercase">
@@ -333,28 +331,28 @@ export const ProjectSection: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleZoomIn}
-                className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors"
+                className="p-2.5 text-white hover:bg-white/20 rounded-lg border border-white/20 transition-colors"
                 title="확대 (+)"
               >
                 <ZoomIn className="w-4 h-4" />
               </button>
               <button
                 onClick={handleZoomOut}
-                className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors"
+                className="p-2.5 text-white hover:bg-white/20 rounded-lg border border-white/20 transition-colors"
                 title="축소 (-)"
               >
                 <ZoomOut className="w-4 h-4" />
               </button>
               <button
                 onClick={handleResetZoom}
-                className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors"
+                className="p-2.5 text-white hover:bg-white/20 rounded-lg border border-white/20 transition-colors"
                 title="초기화"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setIsLightboxOpen(false)}
-                className="p-2.5 text-white hover:bg-red-500/80 border border-white/20 transition-colors ml-2"
+                className="p-2.5 text-white hover:bg-red-500/80 rounded-lg border border-white/20 transition-colors ml-2"
                 title="닫기 (ESC)"
               >
                 <X className="w-5 h-5" />
@@ -369,7 +367,7 @@ export const ProjectSection: React.FC = () => {
           >
             <div 
               style={{ transform: `scale(${zoomLevel})` }}
-              className="transition-transform duration-200 origin-center max-w-full max-h-full bg-white p-4 sm:p-8 shadow-2xl"
+              className="transition-transform duration-200 origin-center max-w-full max-h-full bg-white p-4 sm:p-8 rounded-xl shadow-2xl"
             >
               <img
                 src={currentSheet.imageSrc}
@@ -381,7 +379,7 @@ export const ProjectSection: React.FC = () => {
 
           {/* Modal Footer Controls */}
           <div 
-            className="w-full max-w-7xl text-xs font-mono text-neutral-400 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2"
+            className="w-full max-w-7xl text-xs font-mono text-[#E5D2B8] pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2"
             onClick={(e) => e.stopPropagation()}
           >
             <div>
@@ -394,14 +392,14 @@ export const ProjectSection: React.FC = () => {
                 href={pdfFilePath}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:underline flex items-center gap-1.5"
+                className="text-[#D2AB80] hover:underline flex items-center gap-1.5"
               >
                 <FileDown className="w-3.5 h-3.5" />
                 <span>PDF 다운로드</span>
               </a>
               <button
                 onClick={() => setIsLightboxOpen(false)}
-                className="text-neutral-400 hover:text-white"
+                className="text-neutral-300 hover:text-white"
               >
                 닫기
               </button>
