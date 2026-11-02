@@ -54,9 +54,9 @@ export default function App() {
     let isMounted = true;
     let reconnectTimeout: any;
 
-    // 1. Initial REST fetch for server truth
+    // 1. Initial REST fetch for server truth (no-store to ensure cross-device consistency)
     const fetchLatestSessions = () => {
-      fetch('/api/sessions')
+      fetch(`/api/sessions?_t=${Date.now()}`, { cache: 'no-store' })
         .then((res) => {
           if (!res.ok) throw new Error('Network error');
           return res.json();
@@ -75,6 +75,15 @@ export default function App() {
     };
 
     fetchLatestSessions();
+
+    // Re-fetch immediately when the tab/window regains focus or visibility (crucial for mobile/desktop switching)
+    const handleVisibilityOrFocus = () => {
+      if (document.visibilityState === 'visible') {
+        fetchLatestSessions();
+      }
+    };
+    window.addEventListener('focus', handleVisibilityOrFocus);
+    document.addEventListener('visibilitychange', handleVisibilityOrFocus);
 
     // 2. Real-time WebSocket connection
     const connectWebSocket = () => {
@@ -125,13 +134,15 @@ export default function App() {
 
     connectWebSocket();
 
-    // 3. Fallback polling every 4 seconds to guarantee sync
-    const pollTimer = setInterval(fetchLatestSessions, 4000);
+    // 3. Fallback polling every 3 seconds to guarantee cross-device sync
+    const pollTimer = setInterval(fetchLatestSessions, 3000);
 
     return () => {
       isMounted = false;
       clearTimeout(reconnectTimeout);
       clearInterval(pollTimer);
+      window.removeEventListener('focus', handleVisibilityOrFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityOrFocus);
       if (wsRef.current) {
         wsRef.current.close();
       }
@@ -145,10 +156,11 @@ export default function App() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     } catch (_) {}
 
-    // Send bulk synchronization to server so all other visitors update instantly
+    // Send bulk synchronization to server so all other devices update immediately
     fetch('/api/sessions/bulk-sync', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
       body: JSON.stringify({ sessions: updated }),
     }).catch((err) => {
       console.warn('Sync POST error:', err);

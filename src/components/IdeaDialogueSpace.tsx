@@ -5,10 +5,11 @@ import {
 } from '../types/dialogue';
 import { 
   MessageSquare, 
-  Send, 
   Mail, 
   PlusCircle, 
   ShieldCheck,
+  CheckCircle2,
+  Clock,
   ArrowUpRight,
   ChevronRight,
   Lightbulb
@@ -32,7 +33,6 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
   const verifiedEmail = 'csy50533394@gmail.com';
 
   const [activeSessionId, setActiveSessionId] = useState<string>(sessions[0]?.id || '');
-  const [inputText, setInputText] = useState('');
   
   // New session modal / form states
   const [showNewModal, setShowNewModal] = useState(false);
@@ -42,36 +42,6 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
   const [newFirstQuestion, setNewFirstQuestion] = useState('');
 
   const currentSession = sessions.find((s) => s.id === activeSessionId) || sessions[0];
-
-  // Post a message in the active session
-  const handleSendMessage = () => {
-    if (!inputText.trim() || !currentSession) return;
-
-    const now = new Date();
-    const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-    const newMsg: Message = {
-      id: `msg-${Date.now()}`,
-      sender: isAdmin ? 'planner' : 'visitor',
-      senderName: isAdmin ? '기획자 (본인)' : (currentSession.visitorName || '방문자'),
-      timestamp: timeStr,
-      content: inputText.trim()
-    };
-
-    const updatedSessions = sessions.map((s) => {
-      if (s.id === currentSession.id) {
-        return {
-          ...s,
-          status: isAdmin ? ('답변 완료' as const) : ('새 질문' as const),
-          messages: [...s.messages, newMsg]
-        };
-      }
-      return s;
-    });
-
-    onUpdateSessions(updatedSessions);
-    setInputText('');
-  };
 
   // Create a brand new 1-on-1 idea question session
   const handleCreateSession = (e: React.FormEvent) => {
@@ -336,53 +306,78 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                   })}
                 </div>
 
-                {/* Input Area */}
+                {/* Response / Status Control Area (Answers are exclusively managed from Admin Desk) */}
                 <div className="p-4 sm:p-6 bg-[#F2EFE8] border-t border-[#E5E0D8]">
-                  <div className="flex items-center justify-between mb-2 text-xs font-mono text-[#5C5243]">
-                    <span>
-                      {isAdmin ? (
-                        <span className="text-[#809671] font-bold">
-                          ● 기획자 본인 모드로 공식 답변 작성 중
-                        </span>
-                      ) : (
-                        <span>
-                          방문자로서 추가 질문 및 대화 작성
-                        </span>
-                      )}
-                    </span>
-                    <span className="text-[11px] text-[#827869] hidden sm:inline">
-                      Enter로 전송
-                    </span>
-                  </div>
+                  {isAdmin ? (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#251E14] text-[#F8F6F0] p-4 rounded-xl border border-[#725C3A]/50">
+                      <div className="flex items-center gap-2.5">
+                        <ShieldCheck className="w-5 h-5 text-[#809671] shrink-0" />
+                        <div>
+                          <p className="text-xs font-mono font-bold text-white">
+                            관리자(기획자 본인) 전용 답변 데스크
+                          </p>
+                          <p className="text-[11px] font-mono text-[#D2AB80]">
+                            방문자 질문에 대한 공식 답변 및 인사이트 태그는 관리자 데스크에서만 작성·게시할 수 있습니다.
+                          </p>
+                        </div>
+                      </div>
 
-                  <div className="flex gap-2">
-                    <textarea
-                      rows={2}
-                      value={inputText}
-                      onChange={(e) => setInputText(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault();
-                          handleSendMessage();
-                        }
-                      }}
-                      placeholder={
-                        isAdmin
-                          ? '기획자로서 방문자에게 전달할 아이디어와 조언을 작성하세요...'
-                          : '추가 질문이나 진행하고 싶은 방향, 현재 상황에 대해 적어주세요...'
-                      }
-                      className="flex-1 p-3 bg-white border border-[#E5E0D8] rounded-xl text-xs sm:text-sm text-[#2A2215] focus:outline-hidden focus:border-[#809671] resize-none"
-                    />
+                      <button
+                        type="button"
+                        onClick={onOpenAdminDesk}
+                        className="px-4 py-2.5 bg-[#809671] hover:bg-[#6E8360] text-white font-mono text-xs font-bold tracking-wider uppercase rounded-lg flex items-center gap-2 transition-all cursor-pointer shadow-sm shrink-0"
+                      >
+                        <span>관리자 데스크에서 답변 작성하기</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ) : currentSession.messages.some((m) => m.sender === 'planner') ? (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono bg-white p-4 rounded-xl border border-[#E5E0D8]">
+                      <div className="flex items-center gap-2.5">
+                        <CheckCircle2 className="w-4 h-4 text-[#809671] shrink-0" />
+                        <div>
+                          <p className="font-semibold text-[#2A2215]">
+                            기획자의 공식 검토와 구체적인 시작점 제안이 완료되었습니다.
+                          </p>
+                          <p className="text-[11px] text-[#5C5243]">
+                            추가적인 심층 프로젝트 의뢰나 비공개 상담은 이메일을 통해 이어갈 수 있습니다.
+                          </p>
+                        </div>
+                      </div>
 
-                    <button
-                      type="button"
-                      onClick={handleSendMessage}
-                      disabled={!inputText.trim()}
-                      className="px-6 text-white bg-[#809671] hover:bg-[#6E8360] disabled:opacity-40 disabled:hover:bg-[#809671] rounded-xl flex items-center justify-center transition-colors cursor-pointer shadow-xs"
-                    >
-                      <Send className="w-4 h-4 text-white" />
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        onClick={handleEmailThread}
+                        className="px-4 py-2 bg-[#F8F6F0] hover:bg-[#E5E0D8] border border-[#725C3A]/20 text-[#2A2215] text-[11px] font-semibold rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+                      >
+                        <Mail className="w-3.5 h-3.5 text-[#725C3A]" />
+                        <span>이메일로 추가 문의하기</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono bg-[#E5E0D8]/40 p-4 rounded-xl border border-[#725C3A]/20">
+                      <div className="flex items-center gap-2.5">
+                        <Clock className="w-4 h-4 text-[#D2AB80] shrink-0" />
+                        <div>
+                          <p className="font-semibold text-[#2A2215]">
+                            기획자 검토 및 공식 답변 대기 중
+                          </p>
+                          <p className="text-[11px] text-[#5C5243]">
+                            방문자께서 남겨주신 질문을 기획자가 확인 중입니다. 답변은 관리자 데스크에서 등록되며 즉시 실시간 연동됩니다.
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setShowNewModal(true)}
+                        className="px-4 py-2 bg-[#809671] hover:bg-[#6E8360] text-white text-[11px] font-bold rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 shadow-xs"
+                      >
+                        <PlusCircle className="w-3.5 h-3.5" />
+                        <span>새 질문 등록하기</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
 
               </div>

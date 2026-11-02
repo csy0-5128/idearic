@@ -4,7 +4,8 @@ import { WebSocketServer, WebSocket } from 'ws';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import { defaultSessions, IdeaSession, Message } from './src/types/dialogue.ts';
+import { defaultSessions } from './src/types/dialogue.ts';
+import type { IdeaSession, Message } from './src/types/dialogue.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,17 +26,24 @@ if (!fs.existsSync(DATA_DIR)) {
 
 let sessions: IdeaSession[] = [];
 
-try {
-  if (fs.existsSync(DATA_FILE)) {
-    const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-    sessions = JSON.parse(raw);
-  } else {
-    sessions = [...defaultSessions];
-    fs.writeFileSync(DATA_FILE, JSON.stringify(sessions, null, 2), 'utf-8');
+function loadSessions(): IdeaSession[] {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      const raw = fs.readFileSync(DATA_FILE, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        sessions = parsed;
+        return sessions;
+      }
+    }
+  } catch (err) {
+    console.error('Failed to read sessions data file:', err);
   }
-} catch (err) {
-  console.error('Failed to read sessions data file, using defaultSessions:', err);
-  sessions = [...defaultSessions];
+  if (!sessions || sessions.length === 0) {
+    sessions = [...defaultSessions];
+    saveSessions();
+  }
+  return sessions;
 }
 
 function saveSessions() {
@@ -45,6 +53,17 @@ function saveSessions() {
     console.error('Error saving sessions to disk:', err);
   }
 }
+
+// Initial load
+loadSessions();
+
+// Disable caching for all API requests to ensure instant cross-device updates
+app.use('/api', (_req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
 
 // Broadcast updated sessions to all connected clients
 function broadcastSessions() {
@@ -98,9 +117,10 @@ wss.on('connection', (ws: WebSocket) => {
   });
 });
 
-// 1. Get all sessions
+// 1. Get all sessions (always read latest from disk for cross-instance / cross-device truth)
 app.get('/api/sessions', (_req, res) => {
-  res.json({ success: true, sessions });
+  const current = loadSessions();
+  res.json({ success: true, sessions: current });
 });
 
 // 1-b. Bulk synchronize sessions
