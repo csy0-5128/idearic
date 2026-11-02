@@ -165,6 +165,115 @@ export const ProjectSection: React.FC = () => {
           </div>
         </div>
 
+        {/* Social Proof Architectural Metrics Section */}
+        <div className="mb-16">
+          <div className="flex items-center justify-between pb-3 mb-6 border-b border-[#E5E0D8]">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#809671]"></span>
+              <span className="text-xs font-mono tracking-[0.2em] uppercase text-[#725C3A] font-bold">
+                KEY PERFORMANCE & SOCIAL PROOF · 핵심 지표
+              </span>
+            </div>
+            <span className="text-[11px] font-mono text-[#5C5243] hidden sm:inline">
+              철학적 리서치와 도면 결과물 기반의 실증된 기획 데이터
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Metric 1: Projects Completed */}
+            <div className="bg-white/90 backdrop-blur-xs p-6 border border-[#E5E0D8] rounded-2xl shadow-xs hover:border-[#809671] transition-all group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-[#809671]/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 bg-[#809671]/15 text-[#809671] font-bold rounded-sm">
+                  PORTFOLIO
+                </span>
+                <span className="text-xs font-mono text-[#5C5243]">01</span>
+              </div>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#2A2215] tracking-tight group-hover:text-[#809671] transition-colors">
+                  1
+                </span>
+                <span className="text-sm font-mono font-semibold text-[#809671]">Project</span>
+              </div>
+              <h4 className="text-sm font-bold text-[#2A2215] tracking-wide mb-1.5 uppercase font-condensed">
+                Projects Completed
+              </h4>
+              <p className="text-[11px] font-mono text-[#5C5243] leading-relaxed">
+                경사지 생태 건축 '바람이 통하는 집' 기본설계 및 6면 마스터 도면집 완성
+              </p>
+            </div>
+
+            {/* Metric 2: Years of Experience */}
+            <div className="bg-white/90 backdrop-blur-xs p-6 border border-[#E5E0D8] rounded-2xl shadow-xs hover:border-[#D2AB80] transition-all group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-[#D2AB80]/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 bg-[#D2AB80]/20 text-[#725C3A] font-bold rounded-sm">
+                  PRACTICE
+                </span>
+                <span className="text-xs font-mono text-[#5C5243]">02</span>
+              </div>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#2A2215] tracking-tight group-hover:text-[#D2AB80] transition-colors">
+                  4+
+                </span>
+                <span className="text-sm font-mono font-semibold text-[#D2AB80]">Years</span>
+              </div>
+              <h4 className="text-sm font-bold text-[#2A2215] tracking-wide mb-1.5 uppercase font-condensed">
+                Years of Experience
+              </h4>
+              <p className="text-[11px] font-mono text-[#5C5243] leading-relaxed">
+                건축학 전공 및 공간 리서치·철학적 개념화 실무 연구 집중 기간
+              </p>
+            </div>
+
+            {/* Metric 3: Concepts Developed */}
+            <div className="bg-white/90 backdrop-blur-xs p-6 border border-[#E5E0D8] rounded-2xl shadow-xs hover:border-[#725C3A] transition-all group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-[#725C3A]/10 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 bg-[#725C3A]/15 text-[#725C3A] font-bold rounded-sm">
+                  FRAMEWORKS
+                </span>
+                <span className="text-xs font-mono text-[#5C5243]">03</span>
+              </div>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#2A2215] tracking-tight group-hover:text-[#725C3A] transition-colors">
+                  12+
+                </span>
+                <span className="text-sm font-mono font-semibold text-[#725C3A]">Concepts</span>
+              </div>
+              <h4 className="text-sm font-bold text-[#2A2215] tracking-wide mb-1.5 uppercase font-condensed">
+                Concepts Developed
+              </h4>
+              <p className="text-[11px] font-mono text-[#5C5243] leading-relaxed">
+                대지 순응, 수목 성장 순응, 테라스-지붕 일체화 등 공간 기획 프레임워크
+              </p>
+            </div>
+
+            {/* Metric 4: Drawing Sheets Delivered */}
+            <div className="bg-white/90 backdrop-blur-xs p-6 border border-[#E5E0D8] rounded-2xl shadow-xs hover:border-[#B3B792] transition-all group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-20 h-20 bg-[#B3B792]/15 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 bg-[#B3B792]/25 text-[#5C5243] font-bold rounded-sm">
+                  SCHEMATICS
+                </span>
+                <span className="text-xs font-mono text-[#5C5243]">04</span>
+              </div>
+              <div className="flex items-baseline gap-1 mb-1">
+                <span className="font-syne text-4xl sm:text-5xl font-extrabold text-[#2A2215] tracking-tight group-hover:text-[#809671] transition-colors">
+                  6
+                </span>
+                <span className="text-sm font-mono font-semibold text-[#809671]">Sheets</span>
+              </div>
+              <h4 className="text-sm font-bold text-[#2A2215] tracking-wide mb-1.5 uppercase font-condensed">
+                Drawing Sheets Delivered
+              </h4>
+              <p className="text-[11px] font-mono text-[#5C5243] leading-relaxed">
+                배치도·단면도·층별 평면도 100% 자체 도면화 및 공학적 핀업 검증 완료
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* 3-Column Architectural Cards Grid in Swatch Harmony */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {showcaseCards.map((card) => (

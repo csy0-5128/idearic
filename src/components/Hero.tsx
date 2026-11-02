@@ -12,17 +12,6 @@ export const Hero: React.FC<HeroProps> = ({
   onExploreAbout,
   onContactClick,
 }) => {
-  // Brand Swatches from user attachment:
-  // MATCHA #809671, ALMOND #E5E0D8, PISTACHE #B3B792, CHAI #D2AB80, CAROB #725C3A, VANILLA #E5D2B8
-  const swatches = [
-    { name: 'MATCHA', hex: '#809671', desc: '생태 수목' },
-    { name: 'ALMOND', hex: '#E5E0D8', desc: '석재 캔버스' },
-    { name: 'PISTACHE', hex: '#B3B792', desc: '자연 채광' },
-    { name: 'CHAI', hex: '#D2AB80', desc: '목재 테라스' },
-    { name: 'CAROB', hex: '#725C3A', desc: '대지 토양' },
-    { name: 'VANILLA', hex: '#E5D2B8', desc: '실내 온기' },
-  ];
-
   return (
     <section id="hero" className="relative min-h-screen flex flex-col justify-between pt-28 pb-16 bg-[#F8F6F0] text-[#2A2215] overflow-hidden">
       
@@ -143,26 +132,25 @@ export const Hero: React.FC<HeroProps> = ({
               </div>
             </div>
 
-            {/* Studio Swatch Palette Card (Exact Colors from User Image) */}
-            <div className="p-4 bg-white/80 backdrop-blur-xs border border-[#E5E0D8] rounded-2xl shadow-xs">
+            {/* Architectural Practice Specs Card */}
+            <div className="p-4 bg-white/85 backdrop-blur-xs border border-[#E5E0D8] rounded-2xl shadow-xs">
               <div className="flex items-center justify-between mb-3 text-[10px] font-mono tracking-widest text-[#725C3A] uppercase font-bold">
-                <span>BRAND COLOR SWATCHES</span>
-                <span className="text-[#809671]">STUDIO FLEUR PALETTE</span>
+                <span>PRACTICE SPECS</span>
+                <span className="text-[#809671] font-semibold">OPEN DIALOGUE</span>
               </div>
-
-              <div className="grid grid-cols-6 gap-1.5">
-                {swatches.map((swatch) => (
-                  <div key={swatch.name} className="flex flex-col items-center">
-                    <div 
-                      style={{ backgroundColor: swatch.hex }}
-                      className="w-full h-8 rounded-lg shadow-2xs border border-black/5 mb-1"
-                      title={`${swatch.name} (${swatch.hex})`}
-                    ></div>
-                    <span className="text-[8px] font-mono text-[#5C5243] font-semibold">
-                      {swatch.name.slice(0, 4)}
-                    </span>
-                  </div>
-                ))}
+              <div className="space-y-2 text-xs font-mono text-[#5C5243]">
+                <div className="flex justify-between items-center py-1 border-b border-[#E5E0D8]/60">
+                  <span className="text-[#827869]">TYPOLOGY</span>
+                  <span className="font-semibold text-[#2A2215]">Ecological & Spatial</span>
+                </div>
+                <div className="flex justify-between items-center py-1 border-b border-[#E5E0D8]/60">
+                  <span className="text-[#827869]">METHODOLOGY</span>
+                  <span className="font-semibold text-[#2A2215]">1:1 Collaborative Brief</span>
+                </div>
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-[#827869]">LOCATION</span>
+                  <span className="font-semibold text-[#2A2215]">Seoul · Site Specific</span>
+                </div>
               </div>
             </div>
 
@@ -172,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({
 
       </div>
 
-      {/* Bottom Floating Bar with Swatch Dots & Indicator */}
+      {/* Bottom Floating Bar with Indicator */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full flex items-center justify-between text-xs font-mono text-[#5C5243] border-t border-[#E5E0D8] pt-6">
         <div className="flex items-center gap-6">
           <button
@@ -183,7 +171,7 @@ export const Hero: React.FC<HeroProps> = ({
           </button>
           <span className="text-[#725C3A]/20">|</span>
           <span className="hidden sm:inline text-[#827869]">
-            MATCHA · ALMOND · PISTACHE · CHAI · CAROB · VANILLA
+            ARCHITECTURE · SPACE · FORM · CONTEXT
           </span>
         </div>
 

@@ -41,13 +41,13 @@ export const Header: React.FC<HeaderProps> = ({
 
   const handleAdminAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputPasscode === 'admin' || inputPasscode === '1234' || inputPasscode === '') {
+    if (inputPasscode.trim() === '01280128') {
       onToggleAdmin();
       setShowAuthModal(false);
       setInputPasscode('');
       setAuthError('');
     } else {
-      setAuthError('비밀번호가 올바르지 않습니다. (기본 비밀번호: admin)');
+      setAuthError('비밀번호가 올바르지 않습니다. 다시 입력해 주세요.');
     }
   };
 
@@ -270,12 +270,12 @@ export const Header: React.FC<HeaderProps> = ({
             <form onSubmit={handleAdminAuthSubmit} className="space-y-4 font-mono text-xs">
               <div>
                 <label className="block text-[#5C5243] mb-1.5 uppercase text-[10px] tracking-wider font-semibold">
-                  관리자 비밀번호 (기본값: admin)
+                  관리자 전용 비밀번호
                 </label>
                 <input
                   type="password"
                   autoFocus
-                  placeholder="admin 입력"
+                  placeholder="비밀번호를 입력하세요"
                   value={inputPasscode}
                   onChange={(e) => setInputPasscode(e.target.value)}
                   className="w-full p-3 bg-white border border-[#E5E0D8] text-[#2A2215] focus:outline-hidden focus:border-[#809671]"
@@ -283,7 +283,7 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {authError && (
-                <p className="text-xs text-red-600 font-mono">{authError}</p>
+                <p className="text-xs text-red-600 font-mono font-medium">{authError}</p>
               )}
 
               <div className="pt-2 flex flex-col gap-2.5">
@@ -292,17 +292,6 @@ export const Header: React.FC<HeaderProps> = ({
                   className="w-full py-3 bg-[#809671] hover:bg-[#6E8360] text-white font-mono font-bold tracking-wider uppercase shadow-md transition-all cursor-pointer"
                 >
                   인증하고 관리자 모드 진입
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    onToggleAdmin();
-                    setShowAuthModal(false);
-                  }}
-                  className="w-full py-2.5 bg-[#E5E0D8]/60 hover:bg-[#E5E0D8] text-[#5C5243] border border-[#725C3A]/20 transition-all cursor-pointer"
-                >
-                  원클릭 바로 체험 진입
                 </button>
               </div>
             </form>

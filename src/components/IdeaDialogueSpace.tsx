@@ -19,6 +19,7 @@ interface IdeaDialogueSpaceProps {
   onUpdateSessions: (sessions: IdeaSession[]) => void;
   isAdmin: boolean;
   onOpenAdminDesk?: () => void;
+  isLiveConnected?: boolean;
 }
 
 export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
@@ -26,6 +27,7 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
   onUpdateSessions,
   isAdmin,
   onOpenAdminDesk,
+  isLiveConnected = true,
 }) => {
   const verifiedEmail = 'csy50533394@gmail.com';
 
@@ -132,10 +134,17 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
         {/* Section Header Strip */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-[#E5E0D8]">
           <div>
-            <div className="flex items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#725C3A] uppercase mb-3">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#725C3A] uppercase mb-3">
               <span className="font-bold text-[#809671]">1:1 IDEA DIALOGUE</span>
               <span className="w-12 h-px bg-[#725C3A]/30"></span>
               <span>아이디어 대화 공간</span>
+              
+              {/* Real-time live synchronization indicator */}
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white border border-[#E5E0D8] rounded-full text-[10px] text-[#2A2215] shadow-2xs font-semibold lowercase tracking-normal">
+                <span className={`w-2 h-2 rounded-full ${isLiveConnected ? 'bg-[#809671] animate-pulse' : 'bg-[#D2AB80]'}`}></span>
+                <span>실시간 즉시 연동 중</span>
+              </div>
+
               {isAdmin && (
                 <span className="bg-[#809671] text-white px-2 py-0.5 text-[10px] font-bold rounded">
                   ADMIN VIEW

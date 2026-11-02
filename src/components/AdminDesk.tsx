@@ -27,6 +27,7 @@ interface AdminDeskProps {
   onUpdateSessions: (sessions: IdeaSession[]) => void;
   onExitAdmin: () => void;
   onSwitchToUserView: () => void;
+  isLiveConnected?: boolean;
 }
 
 export const AdminDesk: React.FC<AdminDeskProps> = ({
@@ -34,6 +35,7 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
   onUpdateSessions,
   onExitAdmin,
   onSwitchToUserView,
+  isLiveConnected = true,
 }) => {
   const verifiedEmail = 'csy50533394@gmail.com';
   const [selectedId, setSelectedId] = useState<string>(sessions[0]?.id || '');
@@ -182,11 +184,17 @@ export const AdminDesk: React.FC<AdminDeskProps> = ({
             <span className="font-syne text-2xl sm:text-3xl font-bold text-[#809671]">{answeredCount}건</span>
           </div>
           <div className="bg-[#1F1910] border border-[#725C3A]/40 p-4">
-            <span className="text-[11px] font-mono text-[#E5D2B8] block mb-1">관리자 인증 상태</span>
-            <span className="font-mono text-sm font-semibold text-white flex items-center gap-1.5 mt-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#809671] animate-pulse"></span>
-              인증됨 (기획자 본인)
-            </span>
+            <span className="text-[11px] font-mono text-[#E5D2B8] block mb-1">인증 & 실시간 연동</span>
+            <div className="flex flex-col gap-1 mt-1">
+              <span className="font-mono text-xs font-semibold text-white flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#809671] animate-pulse"></span>
+                인증됨 (비번 01280128)
+              </span>
+              <span className="font-mono text-[10px] text-[#B3B792] flex items-center gap-1">
+                <span className={`w-1.5 h-1.5 rounded-full ${isLiveConnected ? 'bg-[#809671]' : 'bg-[#D2AB80]'}`}></span>
+                {isLiveConnected ? '방문자 화면 즉시 동기화 중' : '동기화 대기 중'}
+              </span>
+            </div>
           </div>
         </div>
 

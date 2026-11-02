@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -42,16 +42,118 @@ export default function App() {
     }
   });
 
+  // Real-time synchronization state
+  const [isLiveConnected, setIsLiveConnected] = useState<boolean>(false);
+  const wsRef = useRef<WebSocket | null>(null);
+
   // View mode: 'visitor' (regular public website) vs 'admin-desk' (dedicated admin workspace)
   const [viewMode, setViewMode] = useState<'visitor' | 'admin-desk'>('visitor');
 
+  // Initial load from server and establish WebSocket real-time channel
   useEffect(() => {
+    let isMounted = true;
+    let reconnectTimeout: any;
+
+    // 1. Initial REST fetch for server truth
+    const fetchLatestSessions = () => {
+      fetch('/api/sessions')
+        .then((res) => {
+          if (!res.ok) throw new Error('Network error');
+          return res.json();
+        })
+        .then((data) => {
+          if (isMounted && data.success && Array.isArray(data.sessions)) {
+            setSessions(data.sessions);
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(data.sessions));
+            } catch (_) {}
+          }
+        })
+        .catch(() => {
+          // Graceful fallback to local cache
+        });
+    };
+
+    fetchLatestSessions();
+
+    // 2. Real-time WebSocket connection
+    const connectWebSocket = () => {
+      try {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.host;
+        if (!host) return;
+
+        const ws = new WebSocket(`${protocol}//${host}/ws`);
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+          if (isMounted) setIsLiveConnected(true);
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data.type === 'sync:sessions' && Array.isArray(data.payload)) {
+              if (isMounted) {
+                setSessions(data.payload);
+                try {
+                  localStorage.setItem(STORAGE_KEY, JSON.stringify(data.payload));
+                } catch (_) {}
+              }
+            }
+          } catch (e) {
+            console.error('Failed to parse websocket message:', e);
+          }
+        };
+
+        ws.onclose = () => {
+          if (isMounted) {
+            setIsLiveConnected(false);
+            reconnectTimeout = setTimeout(connectWebSocket, 2500);
+          }
+        };
+
+        ws.onerror = () => {
+          ws.close();
+        };
+      } catch (err) {
+        if (isMounted) {
+          reconnectTimeout = setTimeout(connectWebSocket, 3000);
+        }
+      }
+    };
+
+    connectWebSocket();
+
+    // 3. Fallback polling every 4 seconds to guarantee sync
+    const pollTimer = setInterval(fetchLatestSessions, 4000);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(reconnectTimeout);
+      clearInterval(pollTimer);
+      if (wsRef.current) {
+        wsRef.current.close();
+      }
+    };
+  }, []);
+
+  // Update sessions locally and broadcast to server for instant multi-user synchronization
+  const handleUpdateSessions = useCallback((updated: IdeaSession[]) => {
+    setSessions(updated);
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [sessions]);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch (_) {}
+
+    // Send bulk synchronization to server so all other visitors update instantly
+    fetch('/api/sessions/bulk-sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessions: updated }),
+    }).catch((err) => {
+      console.warn('Sync POST error:', err);
+    });
+  }, []);
 
   useEffect(() => {
     try {
@@ -127,9 +229,10 @@ export default function App() {
           <div className="pt-16">
             <AdminDesk
               sessions={sessions}
-              onUpdateSessions={(updated) => setSessions(updated)}
+              onUpdateSessions={handleUpdateSessions}
               onExitAdmin={handleToggleAdmin}
               onSwitchToUserView={() => setViewMode('visitor')}
+              isLiveConnected={isLiveConnected}
             />
           </div>
         ) : (
@@ -143,9 +246,10 @@ export default function App() {
             <About />
             <IdeaDialogueSpace 
               sessions={sessions}
-              onUpdateSessions={(updated) => setSessions(updated)}
+              onUpdateSessions={handleUpdateSessions}
               isAdmin={isAdmin}
               onOpenAdminDesk={() => setViewMode('admin-desk')}
+              isLiveConnected={isLiveConnected}
             />
             <ProjectSection />
             <Contact />
