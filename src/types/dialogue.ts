@@ -23,6 +23,8 @@ export interface DrawingSheet {
   category: string;
   pageNumber: number;
   imageSrc: string;
+  fallbackSrc?: string;
+  thumbSrc?: string;
   desc: string;
 }
 

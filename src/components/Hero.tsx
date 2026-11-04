@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, ArrowUpRight, Compass, Layers, Sparkles } from 'lucide-react';
+import { ArchitecturalImage } from './ArchitecturalImage';
 
 interface HeroProps {
   onExploreProject: () => void;
@@ -112,13 +113,17 @@ export const Hero: React.FC<HeroProps> = ({
                 onClick={onExploreProject}
                 className="relative aspect-4/3 overflow-hidden rounded-xl bg-white border border-[#725C3A]/15 cursor-pointer"
               >
-                <img
-                  src="/src/assets/images/hillside_architecture_model_1793260635825.jpg"
+                <ArchitecturalImage
+                  src="/assets/images/hillside_model_web.jpg"
+                  fallbackSrc="/assets/images/hillside_architecture_model_1793260635825.jpg"
                   alt="경사지 생태 건축 스터디 모형"
+                  priority={true}
+                  type="model"
+                  sheetTitle="HILLSIDE ECOLOGICAL MODEL"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2A2215]/70 via-transparent to-transparent"></div>
-                <div className="absolute bottom-3 left-3 right-3 text-white flex items-end justify-between">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2A2215]/70 via-transparent to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-3 left-3 right-3 text-white flex items-end justify-between pointer-events-none">
                   <div>
                     <span className="text-[10px] font-mono text-[#E5D2B8] uppercase block">
                       SECTION & TOPOGRAPHY

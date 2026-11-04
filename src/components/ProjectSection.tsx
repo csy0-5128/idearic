@@ -11,16 +11,19 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { DrawingSheet } from '../types/dialogue';
+import { ArchitecturalImage } from './ArchitecturalImage';
 
 export const ProjectSection: React.FC = () => {
-  // 6 Authentic Drawing Sheets from User's Uploaded PDF
+  // 6 Authentic Drawing Sheets from User's Uploaded PDF with web-optimized versions and fallbacks
   const drawingSheets: DrawingSheet[] = [
     {
       id: 'section',
       name: '단면도 (대표 도면)',
       category: 'SECTION',
       pageNumber: 2,
-      imageSrc: '/assets/drawings/drawing_page_02.png',
+      imageSrc: '/assets/drawings/drawing_page_02_web.png',
+      fallbackSrc: '/assets/drawings/drawing_page_02.png',
+      thumbSrc: '/assets/drawings/drawing_page_02_thumb.png',
       desc: '경사지 수목과 외부테라스 1·2, 내부테라스 1, 중앙공간 및 거주 볼륨의 수직적 위계와 바람길'
     },
     {
@@ -28,7 +31,9 @@ export const ProjectSection: React.FC = () => {
       name: '배치도',
       category: 'SITE PLAN',
       pageNumber: 1,
-      imageSrc: '/assets/drawings/drawing_page_01.png',
+      imageSrc: '/assets/drawings/drawing_page_01_web.png',
+      fallbackSrc: '/assets/drawings/drawing_page_01.png',
+      thumbSrc: '/assets/drawings/drawing_page_01_thumb.png',
       desc: '경사지 등고선과 도로망, 대지 내 건축물과 테라스 배치를 나타낸 대지 배치도'
     },
     {
@@ -36,7 +41,9 @@ export const ProjectSection: React.FC = () => {
       name: '경사 1층 평면도',
       category: 'PLAN',
       pageNumber: 3,
-      imageSrc: '/assets/drawings/drawing_page_03.png',
+      imageSrc: '/assets/drawings/drawing_page_03_web.png',
+      fallbackSrc: '/assets/drawings/drawing_page_03.png',
+      thumbSrc: '/assets/drawings/drawing_page_03_thumb.png',
       desc: '수목 사이로 열린 최하단 외부테라스2 및 경사 진입 계단 구조'
     },
     {
@@ -44,7 +51,9 @@ export const ProjectSection: React.FC = () => {
       name: '경사 2층 평면도',
       category: 'PLAN',
       pageNumber: 4,
-      imageSrc: '/assets/drawings/drawing_page_04.png',
+      imageSrc: '/assets/drawings/drawing_page_04_web.png',
+      fallbackSrc: '/assets/drawings/drawing_page_04.png',
+      thumbSrc: '/assets/drawings/drawing_page_04_thumb.png',
       desc: '경사면과 유기적으로 맞물리는 내부테라스1 및 층간 연계 계단'
     },
     {
@@ -52,7 +61,9 @@ export const ProjectSection: React.FC = () => {
       name: '1층 평면도',
       category: 'PLAN',
       pageNumber: 5,
-      imageSrc: '/assets/drawings/drawing_page_05.png',
+      imageSrc: '/assets/drawings/drawing_page_05_web.png',
+      fallbackSrc: '/assets/drawings/drawing_page_05.png',
+      thumbSrc: '/assets/drawings/drawing_page_05_thumb.png',
       desc: '현관, 중앙공간, 그리고 대형 외부테라스1로 구성된 주 생활 공간'
     },
     {
@@ -60,7 +71,9 @@ export const ProjectSection: React.FC = () => {
       name: '2층 평면도',
       category: 'PLAN',
       pageNumber: 6,
-      imageSrc: '/assets/drawings/drawing_page_06.png',
+      imageSrc: '/assets/drawings/drawing_page_06_web.png',
+      fallbackSrc: '/assets/drawings/drawing_page_06.png',
+      thumbSrc: '/assets/drawings/drawing_page_06_thumb.png',
       desc: '방1, 방2, 중앙 보이드 공간, 화장실, 다용도실이 배치된 상부 층'
     }
   ];
@@ -76,7 +89,7 @@ export const ProjectSection: React.FC = () => {
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.35, 0.65));
   const handleResetZoom = () => setZoomLevel(1);
 
-  // 3 Selected Focus Cards in Swatch Palette
+  // 3 Selected Focus Cards in Swatch Palette with reliable web asset paths
   const showcaseCards = [
     {
       num: '01',
@@ -85,7 +98,9 @@ export const ProjectSection: React.FC = () => {
       subtitle: '경사지 생태 건축 기본 설계 · 수목 보존 및 테라스 일체화',
       tag: 'SECTION DRAWING',
       accentColor: '#809671', // Matcha
-      image: '/assets/drawings/drawing_page_02.png'
+      image: '/assets/drawings/drawing_page_02_web.png',
+      fallbackImage: '/assets/drawings/drawing_page_02.png',
+      type: 'section' as const,
     },
     {
       num: '02',
@@ -94,7 +109,9 @@ export const ProjectSection: React.FC = () => {
       subtitle: '경사지 등고선 분석 및 도로망 순응형 입체 배치 계획',
       tag: 'SITE CONTOUR PLAN',
       accentColor: '#D2AB80', // Chai
-      image: '/assets/drawings/drawing_page_01.png'
+      image: '/assets/drawings/drawing_page_01_web.png',
+      fallbackImage: '/assets/drawings/drawing_page_01.png',
+      type: 'site-plan' as const,
     },
     {
       num: '03',
@@ -103,7 +120,9 @@ export const ProjectSection: React.FC = () => {
       subtitle: '경사면 테라스와 캔틸레버 옥상 녹화의 입체 볼륨 스터디',
       tag: 'PHYSICAL STUDY MODEL',
       accentColor: '#725C3A', // Carob
-      image: '/src/assets/images/hillside_architecture_model_1793260635825.jpg'
+      image: '/assets/images/hillside_model_web.jpg',
+      fallbackImage: '/assets/images/hillside_architecture_model_1793260635825.jpg',
+      type: 'model' as const,
     }
   ];
 
@@ -289,12 +308,15 @@ export const ProjectSection: React.FC = () => {
             >
               {/* Media Container */}
               <div className="relative aspect-4/3 overflow-hidden bg-[#F8F6F0] border border-[#E5E0D8] rounded-xl mb-4">
-                <img
+                <ArchitecturalImage
                   src={card.image}
+                  fallbackSrc={card.fallbackImage}
                   alt={card.title}
-                  className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700"
+                  sheetTitle={card.title}
+                  type={card.type}
+                  className="w-full h-full p-2 group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute top-3 right-3 text-[10px] font-mono tracking-wider px-2 py-1 text-white font-semibold rounded-md shadow-2xs"
+                <div className="absolute top-3 right-3 text-[10px] font-mono tracking-wider px-2 py-1 text-white font-semibold rounded-md shadow-2xs z-10"
                   style={{ backgroundColor: card.accentColor }}
                 >
                   {card.tag}
@@ -371,18 +393,22 @@ export const ProjectSection: React.FC = () => {
           </div>
 
           {/* Active Sheet Display Canvas */}
-          <div className="relative aspect-16/9 rounded-2xl overflow-hidden bg-white border border-[#E5E0D8] p-4 sm:p-8 flex items-center justify-center cursor-zoom-in group mb-8 shadow-sm">
-            <img
+          <div className="relative aspect-16/9 rounded-2xl overflow-hidden bg-white border border-[#E5E0D8] p-3 sm:p-6 flex items-center justify-center cursor-zoom-in group mb-8 shadow-sm">
+            <ArchitecturalImage
               src={currentSheet.imageSrc}
+              fallbackSrc={currentSheet.fallbackSrc}
               alt={currentSheet.name}
+              sheetPage={currentSheet.pageNumber}
+              sheetTitle={currentSheet.name}
+              type={currentSheet.category === 'SECTION' ? 'section' : 'plan'}
+              className="w-full h-full filter contrast-[1.05]"
               onClick={() => setIsLightboxOpen(true)}
-              className="w-full h-full object-contain filter contrast-[1.05] transition-transform duration-500 group-hover:scale-[1.01]"
             />
 
             {/* Click to expand overlay */}
             <div 
               onClick={() => setIsLightboxOpen(true)}
-              className="absolute bottom-5 right-5 bg-[#2A2215]/85 backdrop-blur-md text-white text-[11px] font-mono tracking-wider px-4 py-2 rounded-xl border border-white/20 flex items-center gap-2 transition-all group-hover:bg-[#2A2215]"
+              className="absolute bottom-5 right-5 z-10 bg-[#2A2215]/85 backdrop-blur-md text-white text-[11px] font-mono tracking-wider px-4 py-2 rounded-xl border border-white/20 flex items-center gap-2 transition-all group-hover:bg-[#2A2215]"
             >
               <Maximize2 className="w-3.5 h-3.5 text-[#B3B792]" />
               <span>도면 클릭 시 돋보기 확대 검토</span>
@@ -476,12 +502,17 @@ export const ProjectSection: React.FC = () => {
           >
             <div 
               style={{ transform: `scale(${zoomLevel})` }}
-              className="transition-transform duration-200 origin-center max-w-full max-h-full bg-white p-4 sm:p-8 rounded-xl shadow-2xl"
+              className="transition-transform duration-200 origin-center max-w-full max-h-full bg-white p-3 sm:p-6 rounded-xl shadow-2xl flex items-center justify-center min-w-[320px] min-h-[220px]"
             >
-              <img
+              <ArchitecturalImage
                 src={currentSheet.imageSrc}
+                fallbackSrc={currentSheet.fallbackSrc}
                 alt={currentSheet.name}
-                className="max-h-[75vh] w-auto object-contain"
+                sheetPage={currentSheet.pageNumber}
+                sheetTitle={currentSheet.name}
+                type={currentSheet.category === 'SECTION' ? 'section' : 'plan'}
+                priority={true}
+                className="max-h-[75vh] w-auto max-w-full object-contain"
               />
             </div>
           </div>

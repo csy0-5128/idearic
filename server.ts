@@ -16,6 +16,14 @@ const wss = new WebSocketServer({ server, path: '/ws' });
 
 app.use(express.json());
 
+// Explicitly serve static assets so images and drawings are always delivered reliably on mobile and desktop
+app.use('/assets', express.static(path.join(__dirname, 'public', 'assets'), {
+  maxAge: '1d',
+  immutable: false,
+}));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/src/assets/images', express.static(path.join(__dirname, 'public', 'assets', 'images')));
+
 // Persistent storage setup
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'sessions.json');
