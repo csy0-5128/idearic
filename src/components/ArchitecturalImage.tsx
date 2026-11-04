@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ArchitecturalImageProps {
   src: string;
@@ -25,6 +25,13 @@ export const ArchitecturalImage: React.FC<ArchitecturalImageProps> = ({
   const [currentSrc, setCurrentSrc] = useState<string>(src);
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  // Synchronize internal state whenever src prop changes
+  useEffect(() => {
+    setCurrentSrc(src);
+    setHasError(false);
+    setIsLoaded(false);
+  }, [src, fallbackSrc]);
 
   // If primary image fails, attempt fallback source first
   const handleError = () => {

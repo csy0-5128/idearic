@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Maximize2, 
   ZoomIn, 
@@ -7,7 +7,9 @@ import {
   X, 
   FileDown, 
   ExternalLink,
-  ArrowRight
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { DrawingSheet } from '../types/dialogue';
 import { ArchitecturalImage } from './ArchitecturalImage';
@@ -81,12 +83,47 @@ export const ProjectSection: React.FC = () => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
 
-  const currentSheet = drawingSheets.find((sheet) => sheet.id === selectedSheetId) || drawingSheets[0];
+  const currentSheetIndex = drawingSheets.findIndex((sheet) => sheet.id === selectedSheetId);
+  const safeIndex = currentSheetIndex !== -1 ? currentSheetIndex : 0;
+  const currentSheet = drawingSheets[safeIndex];
   const pdfFilePath = '/assets/aistudio/________b1c41d8d.pdf';
 
   const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.35, 3.0));
   const handleZoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.35, 0.65));
   const handleResetZoom = () => setZoomLevel(1);
+
+  const handleSelectSheet = (sheetId: string) => {
+    setSelectedSheetId(sheetId);
+    handleResetZoom();
+  };
+
+  const handlePrevSheet = () => {
+    const prevIndex = (safeIndex - 1 + drawingSheets.length) % drawingSheets.length;
+    setSelectedSheetId(drawingSheets[prevIndex].id);
+    handleResetZoom();
+  };
+
+  const handleNextSheet = () => {
+    const nextIndex = (safeIndex + 1) % drawingSheets.length;
+    setSelectedSheetId(drawingSheets[nextIndex].id);
+    handleResetZoom();
+  };
+
+  // Keyboard navigation when lightbox is open
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsLightboxOpen(false);
+      } else if (e.key === 'ArrowLeft') {
+        handlePrevSheet();
+      } else if (e.key === 'ArrowRight') {
+        handleNextSheet();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, safeIndex]);
 
   // 3 Selected Focus Cards in Swatch Palette with reliable web asset paths
   const showcaseCards = [
@@ -363,10 +400,7 @@ export const ProjectSection: React.FC = () => {
               return (
                 <button
                   key={sheet.id}
-                  onClick={() => {
-                    setSelectedSheetId(sheet.id);
-                    handleResetZoom();
-                  }}
+                  onClick={() => handleSelectSheet(sheet.id)}
                   className={`px-4 py-2.5 text-xs font-mono tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-2.5 border rounded-xl ${
                     isSelected
                       ? 'bg-[#465839] text-white border-[#37472D] font-bold shadow-xs'
@@ -380,9 +414,13 @@ export const ProjectSection: React.FC = () => {
             })}
           </div>
 
-          {/* Active Sheet Display Canvas */}
-          <div className="relative aspect-16/9 overflow-hidden bg-white border border-[#313639]/15 p-3 sm:p-6 flex items-center justify-center cursor-zoom-in group mb-8 shadow-sm rounded-3xl">
+          {/* Active Sheet Display Canvas (Clicking opens fullscreen) */}
+          <div 
+            onClick={() => setIsLightboxOpen(true)}
+            className="relative aspect-16/9 overflow-hidden bg-white border border-[#313639]/15 p-3 sm:p-6 flex items-center justify-center cursor-zoom-in group mb-8 shadow-sm rounded-3xl"
+          >
             <ArchitecturalImage
+              key={`main-${currentSheet.id}`}
               src={currentSheet.imageSrc}
               fallbackSrc={currentSheet.fallbackSrc}
               alt={currentSheet.name}
@@ -390,16 +428,14 @@ export const ProjectSection: React.FC = () => {
               sheetTitle={currentSheet.name}
               type={currentSheet.category === 'SECTION' ? 'section' : 'plan'}
               className="w-full h-full filter contrast-[1.05]"
-              onClick={() => setIsLightboxOpen(true)}
             />
 
             {/* Click to expand overlay */}
             <div 
-              onClick={() => setIsLightboxOpen(true)}
-              className="absolute bottom-5 right-5 z-10 bg-[#222628]/90 backdrop-blur-md text-white text-[11px] font-mono tracking-wider px-4 py-2 border border-white/20 flex items-center gap-2 transition-all hover:bg-[#222628] rounded-xl"
+              className="absolute bottom-5 right-5 z-10 bg-[#222628]/90 backdrop-blur-md text-white text-[11px] font-mono tracking-wider px-4 py-2 border border-white/20 flex items-center gap-2 transition-all hover:bg-[#222628] rounded-xl shadow-lg pointer-events-none"
             >
               <Maximize2 className="w-3.5 h-3.5 text-[#C49D6C]" />
-              <span>도면 클릭 시 돋보기 확대 검토</span>
+              <span>도면 클릭 시 전체화면 정밀 검토</span>
             </div>
           </div>
 
@@ -431,68 +467,120 @@ export const ProjectSection: React.FC = () => {
 
       </div>
 
-      {/* High-Resolution Fullscreen Lightbox Modal */}
+      {/* High-Resolution Fullscreen Lightbox Modal with Multi-Sheet Navigation */}
       {isLightboxOpen && (
         <div 
           className="fixed inset-0 z-50 bg-[#222628]/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-6 animate-in fade-in duration-200"
           onClick={() => setIsLightboxOpen(false)}
         >
-          {/* Modal Header */}
+          {/* Modal Top Header */}
           <div 
-            className="w-full max-w-7xl flex items-center justify-between text-white pb-4 border-b border-white/15"
+            className="w-full max-w-7xl flex flex-col gap-3 text-white pb-3 border-b border-white/15"
             onClick={(e) => e.stopPropagation()}
           >
-            <div>
-              <span className="text-[10px] font-mono tracking-[0.25em] text-[#C49D6C] uppercase block font-bold">
-                AUTHENTIC ARCHITECTURAL INSPECTOR
-              </span>
-              <h3 className="font-condensed text-xl sm:text-2xl font-bold text-white tracking-wide uppercase">
-                {currentSheet.name} (P.0{currentSheet.pageNumber})
-              </h3>
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-[10px] font-mono tracking-[0.25em] text-[#C49D6C] uppercase block font-bold">
+                  AUTHENTIC ARCHITECTURAL INSPECTOR · 전체화면 도면 뷰어
+                </span>
+                <h3 className="font-condensed text-xl sm:text-2xl font-bold text-white tracking-wide uppercase">
+                  {currentSheet.name} (P.0{currentSheet.pageNumber})
+                </h3>
+              </div>
+
+              {/* Top Zoom & Close Controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleZoomIn}
+                  className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors rounded-xl cursor-pointer"
+                  title="확대 (+)"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleZoomOut}
+                  className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors rounded-xl cursor-pointer"
+                  title="축소 (-)"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleResetZoom}
+                  className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors rounded-xl cursor-pointer"
+                  title="초기화"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="p-2.5 text-white hover:bg-red-500/80 border border-white/20 transition-colors ml-2 rounded-xl cursor-pointer"
+                  title="닫기 (ESC)"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleZoomIn}
-                className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors"
-                title="확대 (+)"
-              >
-                <ZoomIn className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleZoomOut}
-                className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors"
-                title="축소 (-)"
-              >
-                <ZoomOut className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleResetZoom}
-                className="p-2.5 text-white hover:bg-white/20 border border-white/20 transition-colors"
-                title="초기화"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setIsLightboxOpen(false)}
-                className="p-2.5 text-white hover:bg-red-500/80 border border-white/20 transition-colors ml-2"
-                title="닫기 (ESC)"
-              >
-                <X className="w-5 h-5" />
-              </button>
+            {/* Quick Sheet Selector Navigation Tabs inside Fullscreen Modal */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+              {drawingSheets.map((sheet) => {
+                const isSelected = sheet.id === currentSheet.id;
+                return (
+                  <button
+                    key={sheet.id}
+                    onClick={() => handleSelectSheet(sheet.id)}
+                    className={`px-3 py-1.5 text-xs font-mono tracking-wider uppercase transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-2 rounded-xl border ${
+                      isSelected
+                        ? 'bg-[#465839] text-white border-[#465839] font-bold shadow-md'
+                        : 'bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white border-white/15'
+                    }`}
+                  >
+                    <span className="text-[10px] opacity-75">P.0{sheet.pageNumber}</span>
+                    <span>{sheet.name}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Lightbox Drawing Stage */}
+          {/* Lightbox Drawing Stage with Floating Prev / Next Navigation Arrows */}
           <div 
-            className="w-full max-w-7xl flex-1 flex items-center justify-center overflow-auto my-4 cursor-default p-2"
+            className="relative w-full max-w-7xl flex-1 flex items-center justify-center overflow-auto my-3 cursor-default p-2"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Floating Previous Sheet Arrow Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrevSheet();
+              }}
+              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 bg-[#222628]/90 hover:bg-[#465839] text-white rounded-full border border-white/25 shadow-2xl transition-all cursor-pointer group flex items-center gap-2"
+              title="이전 도면 보기 (←)"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+              <span className="hidden lg:inline text-xs font-mono pr-1">이전 도면</span>
+            </button>
+
+            {/* Floating Next Sheet Arrow Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNextSheet();
+              }}
+              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 bg-[#222628]/90 hover:bg-[#465839] text-white rounded-full border border-white/25 shadow-2xl transition-all cursor-pointer group flex items-center gap-2"
+              title="다음 도면 보기 (→)"
+            >
+              <span className="hidden lg:inline text-xs font-mono pl-1">다음 도면</span>
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+
+            {/* Drawing Image Stage */}
             <div 
               style={{ transform: `scale(${zoomLevel})` }}
-              className="transition-transform duration-200 origin-center max-w-full max-h-full bg-white p-3 sm:p-6 shadow-2xl flex items-center justify-center min-w-[320px] min-h-[220px]"
+              className="transition-transform duration-200 origin-center max-w-full max-h-full bg-white p-3 sm:p-6 shadow-2xl flex items-center justify-center min-w-[320px] min-h-[220px] rounded-2xl"
             >
               <ArchitecturalImage
+                key={`lightbox-${currentSheet.id}`}
                 src={currentSheet.imageSrc}
                 fallbackSrc={currentSheet.fallbackSrc}
                 alt={currentSheet.name}
@@ -500,22 +588,46 @@ export const ProjectSection: React.FC = () => {
                 sheetTitle={currentSheet.name}
                 type={currentSheet.category === 'SECTION' ? 'section' : 'plan'}
                 priority={true}
-                className="max-h-[75vh] w-auto max-w-full object-contain"
+                className="max-h-[72vh] w-auto max-w-full object-contain"
               />
             </div>
           </div>
 
-          {/* Modal Footer Controls */}
+          {/* Modal Footer Controls with Sheet Navigator */}
           <div 
-            className="w-full max-w-7xl text-xs font-mono text-[#EFECE6] pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2"
+            className="w-full max-w-7xl text-xs font-mono text-[#EFECE6] pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3"
             onClick={(e) => e.stopPropagation()}
           >
-            <div>
-              <span>{currentSheet.desc}</span>
-              <span className="ml-2 text-white">({Math.round(zoomLevel * 100)}%)</span>
+            {/* Sheet Description & Zoom */}
+            <div className="flex items-center gap-2">
+              <span className="text-[#C49D6C] font-bold">P.0{currentSheet.pageNumber} / 06</span>
+              <span className="text-white/30">|</span>
+              <span className="line-clamp-1">{currentSheet.desc}</span>
+              <span className="ml-1 text-white/80">({Math.round(zoomLevel * 100)}%)</span>
             </div>
 
-            <div className="flex items-center gap-6">
+            {/* Center Navigation Buttons */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handlePrevSheet}
+                className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-mono text-white flex items-center gap-1.5 transition-colors cursor-pointer border border-white/15"
+                title="이전 도면으로 이동"
+              >
+                <ChevronLeft className="w-3.5 h-3.5 text-[#C49D6C]" />
+                <span>이전 도면</span>
+              </button>
+              <button
+                onClick={handleNextSheet}
+                className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-mono text-white flex items-center gap-1.5 transition-colors cursor-pointer border border-white/15"
+                title="다음 도면으로 이동"
+              >
+                <span>다음 도면</span>
+                <ChevronRight className="w-3.5 h-3.5 text-[#C49D6C]" />
+              </button>
+            </div>
+
+            {/* Download & Close */}
+            <div className="flex items-center gap-5">
               <a
                 href={pdfFilePath}
                 target="_blank"
@@ -527,7 +639,7 @@ export const ProjectSection: React.FC = () => {
               </a>
               <button
                 onClick={() => setIsLightboxOpen(false)}
-                className="text-neutral-300 hover:text-white"
+                className="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-neutral-300 hover:text-white cursor-pointer transition-colors"
               >
                 닫기
               </button>
