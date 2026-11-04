@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { 
-  IdeaSession, 
-  Message 
+  IdeaSession
 } from '../types/dialogue';
 import { 
-  MessageSquare, 
   Mail, 
   PlusCircle, 
-  ShieldCheck,
-  CheckCircle2,
-  Clock,
-  ArrowUpRight,
-  ChevronRight,
-  Lightbulb
+  ShieldCheck, 
+  CheckCircle2, 
+  Clock, 
+  ArrowUpRight, 
+  ChevronRight 
 } from 'lucide-react';
 
 interface IdeaDialogueSpaceProps {
@@ -94,7 +91,7 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
   };
 
   return (
-    <section id="dialogue" className="py-24 sm:py-32 bg-[#F8F6F0] text-[#2A2215] border-b border-[#E5E0D8] relative overflow-hidden">
+    <section id="dialogue" className="py-24 sm:py-32 bg-[#F7F6F2] text-[#222628] border-b border-[#313639]/15 relative overflow-hidden">
       
       {/* Background Architectural Grid */}
       <div className="absolute inset-0 architectural-earth-grid opacity-50 pointer-events-none"></div>
@@ -102,31 +99,31 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8">
         
         {/* Section Header Strip */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-[#E5E0D8]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-[#313639]/15">
           <div>
-            <div className="flex flex-wrap items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#725C3A] uppercase mb-3">
-              <span className="font-bold text-[#809671]">1:1 IDEA DIALOGUE</span>
-              <span className="w-12 h-px bg-[#725C3A]/30"></span>
+            <div className="flex flex-wrap items-center gap-3 text-xs font-mono tracking-[0.25em] text-[#58514C] uppercase mb-3">
+              <span className="font-bold text-[#465839]">1:1 IDEA DIALOGUE</span>
+              <span className="w-12 h-px bg-[#313639]/30"></span>
               <span>아이디어 대화 공간</span>
               
               {/* Real-time live synchronization indicator */}
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white border border-[#E5E0D8] rounded-full text-[10px] text-[#2A2215] shadow-2xs font-semibold lowercase tracking-normal">
-                <span className={`w-2 h-2 rounded-full ${isLiveConnected ? 'bg-[#809671] animate-pulse' : 'bg-[#D2AB80]'}`}></span>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white border border-[#313639]/15 text-[10px] text-[#222628] font-semibold lowercase tracking-normal">
+                <span className={`w-2 h-2 ${isLiveConnected ? 'bg-[#465839] animate-pulse' : 'bg-[#A88153]'}`}></span>
                 <span>실시간 즉시 연동 중</span>
               </div>
 
               {isAdmin && (
-                <span className="bg-[#809671] text-white px-2 py-0.5 text-[10px] font-bold rounded">
+                <span className="bg-[#465839] text-white px-2 py-0.5 text-[10px] font-bold">
                   ADMIN VIEW
                 </span>
               )}
             </div>
             
-            <h2 className="font-condensed text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#2A2215] uppercase leading-none mb-4">
+            <h2 className="font-condensed text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#222628] uppercase leading-none mb-4">
               COLLABORATION & IDEAS.
             </h2>
             
-            <p className="text-sm sm:text-base text-[#5C5243] font-normal max-w-2xl leading-relaxed text-balance">
+            <p className="text-sm sm:text-base text-[#58514C] font-normal max-w-2xl leading-relaxed text-balance">
               어떤 주제로 어떻게 진행하고 싶으신가요? 현재 막막하거나 방향이 고민되는 점을 질문해 주세요.
               철학적 본질 파악과 공간적 언어로 구체적인 시작점을 함께 찾아드립니다.
             </p>
@@ -136,16 +133,16 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
             {isAdmin && onOpenAdminDesk && (
               <button
                 onClick={onOpenAdminDesk}
-                className="px-4 py-3 text-xs font-mono tracking-wider uppercase text-[#725C3A] bg-[#E5E0D8] hover:bg-[#D2AB80]/40 border border-[#725C3A]/25 rounded-xl flex items-center gap-2 transition-all cursor-pointer font-semibold"
+                className="px-4 py-3 text-xs font-mono tracking-wider uppercase text-[#313639] bg-[#EFECE6] hover:bg-[#313639] hover:text-white border border-[#313639]/25 flex items-center gap-2 transition-all cursor-pointer font-semibold rounded-2xl"
               >
-                <ShieldCheck className="w-4 h-4 text-[#809671]" />
+                <ShieldCheck className="w-4 h-4 text-[#465839]" />
                 <span>관리자 데스크 열기</span>
               </button>
             )}
 
             <button
               onClick={() => setShowNewModal(true)}
-              className="px-5 py-3 text-xs font-mono tracking-wider uppercase text-white bg-[#809671] hover:bg-[#6E8360] font-bold rounded-xl flex items-center gap-2 shadow-md transition-all cursor-pointer"
+              className="px-5 py-3 text-xs font-mono tracking-wider uppercase text-white bg-[#465839] hover:bg-[#37472D] font-bold flex items-center gap-2 border border-[#37472D] transition-all cursor-pointer rounded-2xl shadow-sm"
             >
               <PlusCircle className="w-4 h-4 text-white" />
               <span>새 아이디어 질문하기</span>
@@ -158,9 +155,9 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
           
           {/* Left Column: Topics / Sessions List (4 Cols) */}
           <div className="lg:col-span-4 flex flex-col gap-3">
-            <div className="flex items-center justify-between text-xs font-mono text-[#5C5243] px-1 mb-1 font-semibold">
+            <div className="flex items-center justify-between text-xs font-mono text-[#58514C] px-1 mb-1 font-semibold">
               <span className="uppercase tracking-wider">대화 주제 목록 ({sessions.length})</span>
-              <span className="text-[11px] text-[#809671]">
+              <span className="text-[11px] text-[#465839]">
                 {isAdmin ? 'ADMIN' : 'VISITOR'}
               </span>
             </div>
@@ -172,36 +169,36 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                   <div
                     key={session.id}
                     onClick={() => setActiveSessionId(session.id)}
-                    className={`p-5 rounded-2xl border transition-all cursor-pointer text-left ${
+                    className={`p-5 border transition-all cursor-pointer text-left rounded-2xl ${
                       isActive
-                        ? 'bg-white border-[#809671] shadow-md ring-2 ring-[#809671]/20'
-                        : 'bg-white/80 hover:bg-white border-[#E5E0D8] shadow-2xs'
+                        ? 'bg-white border-[#465839] shadow-md ring-2 ring-[#465839]/20'
+                        : 'bg-white/80 hover:bg-white border-[#313639]/15 shadow-2xs'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase tracking-wider ${
+                      <span className={`text-[10px] font-mono px-2 py-0.5 font-bold uppercase tracking-wider rounded-md ${
                         session.status === '답변 완료'
-                          ? 'bg-[#E5E0D8] text-[#725C3A]'
-                          : 'bg-[#809671] text-white'
+                          ? 'bg-[#EFECE6] text-[#313639] border border-[#313639]/20'
+                          : 'bg-[#465839] text-white'
                       }`}>
                         {session.status}
                       </span>
-                      <span className="text-[10px] font-mono text-[#827869]">
+                      <span className="text-[10px] font-mono text-[#847E79]">
                         {session.createdAt}
                       </span>
                     </div>
 
-                    <h4 className="font-condensed text-lg font-bold text-[#2A2215] tracking-wide line-clamp-2 mb-1 leading-snug">
+                    <h4 className="font-condensed text-lg font-bold text-[#222628] tracking-wide line-clamp-2 mb-1 leading-snug">
                       {session.title}
                     </h4>
 
-                    <p className="text-[11px] font-mono text-[#5C5243] line-clamp-1 mb-3">
+                    <p className="text-[11px] font-mono text-[#58514C] line-clamp-1 mb-3">
                       {session.stage}
                     </p>
 
-                    <div className="flex items-center justify-between text-[11px] font-mono text-[#827869] pt-2 border-t border-[#E5E0D8]">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#847E79] pt-2 border-t border-[#313639]/10">
                       <span>질문자: {session.visitorName}</span>
-                      <span className="flex items-center gap-1 text-[#809671] font-semibold">
+                      <span className="flex items-center gap-1 text-[#465839] font-semibold">
                         메시지 {session.messages.length}
                         <ChevronRight className="w-3 h-3" />
                       </span>
@@ -212,11 +209,11 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
             </div>
 
             {/* Helper Note */}
-            <div className="p-4 bg-white/70 border border-[#E5E0D8] rounded-2xl text-xs font-mono text-[#5C5243] mt-2 shadow-2xs">
-              <span className="text-[#725C3A] block font-bold uppercase mb-1">
+            <div className="p-4 bg-white/70 border border-[#313639]/15 text-xs font-mono text-[#58514C] mt-2 shadow-2xs rounded-2xl">
+              <span className="text-[#313639] block font-bold uppercase mb-1">
                 1:1 질문 가이드
               </span>
-              <p className="text-[11px] text-[#5C5243] leading-relaxed">
+              <p className="text-[11px] text-[#58514C] leading-relaxed">
                 공간 기획, 건축 설계 방향성, 대지 분석, 철학적 개념의 시각화 등 해결하고 싶은 막막함을 솔직하게 남겨주시면 가장 실효성 있는 시작점을 회신드립니다.
               </p>
             </div>
@@ -225,21 +222,21 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
           {/* Right Column: Active Conversation Thread (8 Cols) */}
           <div className="lg:col-span-8 flex flex-col">
             {currentSession ? (
-              <div className="bg-white rounded-3xl border border-[#E5E0D8] overflow-hidden flex flex-col min-h-[620px] shadow-sm">
+              <div className="bg-white border border-[#313639]/15 overflow-hidden flex flex-col min-h-[620px] shadow-sm rounded-3xl">
                 
                 {/* Active Session Top Bar */}
-                <div className="p-6 bg-[#F2EFE8] border-b border-[#E5E0D8] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="p-6 bg-[#EFECE6] border-b border-[#313639]/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#809671] font-bold">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#465839] font-bold">
                         {currentSession.stage}
                       </span>
-                      <span className="text-[#725C3A]/30">·</span>
-                      <span className="text-[11px] font-mono text-[#5C5243]">
+                      <span className="text-[#313639]/30">·</span>
+                      <span className="text-[11px] font-mono text-[#58514C]">
                         의뢰자: {currentSession.visitorName}
                       </span>
                     </div>
-                    <h3 className="font-condensed text-xl sm:text-2xl font-bold text-[#2A2215] tracking-wide uppercase">
+                    <h3 className="font-condensed text-xl sm:text-2xl font-bold text-[#222628] tracking-wide uppercase">
                       {currentSession.title}
                     </h3>
                   </div>
@@ -248,10 +245,10 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={handleEmailThread}
-                      className="px-3.5 py-2 text-xs font-mono tracking-wider uppercase text-[#725C3A] bg-white hover:bg-[#E5E0D8] border border-[#725C3A]/25 rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer font-semibold shadow-2xs"
+                      className="px-3.5 py-2 text-xs font-mono tracking-wider uppercase text-[#313639] bg-white hover:bg-[#EFECE6] border border-[#313639]/25 flex items-center gap-1.5 transition-colors cursor-pointer font-semibold shadow-2xs rounded-xl"
                       title="이 대화 내용을 기획자 이메일로 전송하여 추가 논의"
                     >
-                      <Mail className="w-3.5 h-3.5 text-[#809671]" />
+                      <Mail className="w-3.5 h-3.5 text-[#465839]" />
                       <span>이메일로 이어가기</span>
                     </button>
                   </div>
@@ -266,33 +263,33 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                         key={msg.id}
                         className={`flex flex-col ${isPlanner ? 'items-start' : 'items-end'}`}
                       >
-                        <div className="flex items-center gap-2 mb-1.5 text-xs font-mono text-[#5C5243]">
-                          <span className={`font-semibold ${isPlanner ? 'text-[#809671]' : 'text-[#725C3A]'}`}>
+                        <div className="flex items-center gap-2 mb-1.5 text-xs font-mono text-[#58514C]">
+                          <span className={`font-semibold ${isPlanner ? 'text-[#465839]' : 'text-[#313639]'}`}>
                             {msg.senderName}
                           </span>
-                          <span className="text-[10px] text-[#827869]">{msg.timestamp}</span>
+                          <span className="text-[10px] text-[#847E79]">{msg.timestamp}</span>
                         </div>
 
                         <div
-                          className={`max-w-2xl p-5 rounded-2xl text-xs sm:text-sm leading-relaxed border ${
+                          className={`max-w-2xl p-5 text-xs sm:text-sm leading-relaxed border rounded-2xl ${
                             isPlanner
-                              ? 'bg-white text-[#2A2215] border-[#E5E0D8] rounded-tl-xs shadow-xs'
-                              : 'bg-[#725C3A] text-white border-[#725C3A] rounded-tr-xs shadow-sm'
+                              ? 'bg-white text-[#222628] border-[#313639]/15 shadow-xs rounded-tl-xs'
+                              : 'bg-[#313639] text-white border-[#222628] shadow-sm rounded-tr-xs'
                           }`}
                         >
                           <div className="whitespace-pre-line font-normal">{msg.content}</div>
 
                           {/* Key Insight Tags if present */}
                           {msg.keyInsights && msg.keyInsights.length > 0 && (
-                            <div className="mt-4 pt-3 border-t border-[#E5E0D8]">
-                              <span className="text-[10px] font-mono text-[#809671] uppercase tracking-wider block mb-1.5 font-bold">
+                            <div className="mt-4 pt-3 border-t border-[#313639]/15">
+                              <span className="text-[10px] font-mono text-[#465839] uppercase tracking-wider block mb-1.5 font-bold">
                                 기획 핵심 시작점 (Key Foundations)
                               </span>
                               <div className="flex flex-wrap gap-1.5">
                                 {msg.keyInsights.map((insight, idx) => (
                                   <span
                                     key={idx}
-                                    className="text-[11px] font-mono bg-[#E5E0D8]/60 px-2.5 py-1 rounded-md border border-[#725C3A]/20 text-[#2A2215] font-semibold"
+                                    className="text-[11px] font-mono bg-[#EFECE6] px-2.5 py-1 border border-[#313639]/20 text-[#222628] font-semibold rounded-md"
                                   >
                                     ✓ {insight}
                                   </span>
@@ -307,16 +304,16 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                 </div>
 
                 {/* Response / Status Control Area (Answers are exclusively managed from Admin Desk) */}
-                <div className="p-4 sm:p-6 bg-[#F2EFE8] border-t border-[#E5E0D8]">
+                <div className="p-4 sm:p-6 bg-[#EFECE6] border-t border-[#313639]/15">
                   {isAdmin ? (
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#251E14] text-[#F8F6F0] p-4 rounded-xl border border-[#725C3A]/50">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#222628] text-[#F7F6F2] p-4 border border-[#313639] rounded-2xl">
                       <div className="flex items-center gap-2.5">
-                        <ShieldCheck className="w-5 h-5 text-[#809671] shrink-0" />
+                        <ShieldCheck className="w-5 h-5 text-[#465839] shrink-0" />
                         <div>
                           <p className="text-xs font-mono font-bold text-white">
                             관리자(기획자 본인) 전용 답변 데스크
                           </p>
-                          <p className="text-[11px] font-mono text-[#D2AB80]">
+                          <p className="text-[11px] font-mono text-[#C49D6C]">
                             방문자 질문에 대한 공식 답변 및 인사이트 태그는 관리자 데스크에서만 작성·게시할 수 있습니다.
                           </p>
                         </div>
@@ -325,21 +322,21 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                       <button
                         type="button"
                         onClick={onOpenAdminDesk}
-                        className="px-4 py-2.5 bg-[#809671] hover:bg-[#6E8360] text-white font-mono text-xs font-bold tracking-wider uppercase rounded-lg flex items-center gap-2 transition-all cursor-pointer shadow-sm shrink-0"
+                        className="px-4 py-2.5 bg-[#465839] hover:bg-[#37472D] text-white font-mono text-xs font-bold tracking-wider uppercase flex items-center gap-2 transition-all cursor-pointer shrink-0 border border-[#37472D] rounded-xl"
                       >
                         <span>관리자 데스크에서 답변 작성하기</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   ) : currentSession.messages.some((m) => m.sender === 'planner') ? (
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono bg-white p-4 rounded-xl border border-[#E5E0D8]">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono bg-white p-4 border border-[#313639]/15 rounded-2xl">
                       <div className="flex items-center gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-[#809671] shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-[#465839] shrink-0" />
                         <div>
-                          <p className="font-semibold text-[#2A2215]">
+                          <p className="font-semibold text-[#222628]">
                             기획자의 공식 검토와 구체적인 시작점 제안이 완료되었습니다.
                           </p>
-                          <p className="text-[11px] text-[#5C5243]">
+                          <p className="text-[11px] text-[#58514C]">
                             추가적인 심층 프로젝트 의뢰나 비공개 상담은 이메일을 통해 이어갈 수 있습니다.
                           </p>
                         </div>
@@ -348,21 +345,21 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                       <button
                         type="button"
                         onClick={handleEmailThread}
-                        className="px-4 py-2 bg-[#F8F6F0] hover:bg-[#E5E0D8] border border-[#725C3A]/20 text-[#2A2215] text-[11px] font-semibold rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+                        className="px-4 py-2 bg-[#F7F6F2] hover:bg-[#EFECE6] border border-[#313639]/20 text-[#222628] text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 rounded-xl"
                       >
-                        <Mail className="w-3.5 h-3.5 text-[#725C3A]" />
+                        <Mail className="w-3.5 h-3.5 text-[#313639]" />
                         <span>이메일로 추가 문의하기</span>
                       </button>
                     </div>
                   ) : (
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono bg-[#E5E0D8]/40 p-4 rounded-xl border border-[#725C3A]/20">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono bg-[#EFECE6] p-4 border border-[#313639]/20 rounded-2xl">
                       <div className="flex items-center gap-2.5">
-                        <Clock className="w-4 h-4 text-[#D2AB80] shrink-0" />
+                        <Clock className="w-4 h-4 text-[#A88153] shrink-0" />
                         <div>
-                          <p className="font-semibold text-[#2A2215]">
+                          <p className="font-semibold text-[#222628]">
                             기획자 검토 및 공식 답변 대기 중
                           </p>
-                          <p className="text-[11px] text-[#5C5243]">
+                          <p className="text-[11px] text-[#58514C]">
                             방문자께서 남겨주신 질문을 기획자가 확인 중입니다. 답변은 관리자 데스크에서 등록되며 즉시 실시간 연동됩니다.
                           </p>
                         </div>
@@ -371,7 +368,7 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                       <button
                         type="button"
                         onClick={() => setShowNewModal(true)}
-                        className="px-4 py-2 bg-[#809671] hover:bg-[#6E8360] text-white text-[11px] font-bold rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 shadow-xs"
+                        className="px-4 py-2 bg-[#465839] hover:bg-[#37472D] text-white text-[11px] font-bold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 border border-[#37472D] rounded-xl"
                       >
                         <PlusCircle className="w-3.5 h-3.5" />
                         <span>새 질문 등록하기</span>
@@ -391,25 +388,25 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
       {/* New Question Modal */}
       {showNewModal && (
         <div 
-          className="fixed inset-0 z-50 bg-[#2A2215]/75 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-[#222628]/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
           onClick={() => setShowNewModal(false)}
         >
           <div 
-            className="w-full max-w-xl bg-[#F8F6F0] text-[#2A2215] p-7 sm:p-9 rounded-3xl border border-[#725C3A]/30 shadow-2xl"
+            className="w-full max-w-xl bg-[#F7F6F2] text-[#222628] p-7 sm:p-9 border border-[#313639]/30 shadow-2xl rounded-3xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-4 mb-5 border-b border-[#E5E0D8]">
+            <div className="flex items-center justify-between pb-4 mb-5 border-b border-[#313639]/15">
               <div>
-                <span className="text-[10px] font-mono tracking-widest text-[#809671] uppercase block font-bold">
+                <span className="text-[10px] font-mono tracking-widest text-[#465839] uppercase block font-bold">
                   1:1 IDEA CONSULTATION
                 </span>
-                <h3 className="font-condensed text-2xl font-bold text-[#2A2215] uppercase tracking-wide">
+                <h3 className="font-condensed text-2xl font-bold text-[#222628] uppercase tracking-wide">
                   새로운 아이디어 질문 및 고민 공유
                 </h3>
               </div>
               <button
                 onClick={() => setShowNewModal(false)}
-                className="p-1.5 text-[#5C5243] hover:text-[#2A2215]"
+                className="p-1.5 text-[#58514C] hover:text-[#222628] cursor-pointer"
               >
                 ✕
               </button>
@@ -417,7 +414,7 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
 
             <form onSubmit={handleCreateSession} className="space-y-4 text-xs font-mono">
               <div>
-                <label className="block text-[#5C5243] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
+                <label className="block text-[#58514C] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
                   어떤 주제에 대한 질문인가요? *
                 </label>
                 <input
@@ -426,19 +423,19 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                   placeholder="예: 경사지 카페 공간의 수목 보존 배치 방향"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full p-3 bg-white border border-[#E5E0D8] rounded-xl text-[#2A2215] focus:outline-hidden focus:border-[#809671]"
+                  className="w-full p-3 bg-white border border-[#313639]/20 text-[#222628] focus:outline-hidden focus:border-[#465839] rounded-xl"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[#5C5243] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
+                  <label className="block text-[#58514C] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
                     현재 프로젝트 진행 단계
                   </label>
                   <select
                     value={newStage}
                     onChange={(e) => setNewStage(e.target.value)}
-                    className="w-full p-3 bg-white border border-[#E5E0D8] rounded-xl text-[#2A2215] focus:outline-hidden focus:border-[#809671] cursor-pointer"
+                    className="w-full p-3 bg-white border border-[#313639]/20 text-[#222628] focus:outline-hidden focus:border-[#465839] cursor-pointer rounded-xl"
                   >
                     <option value="01. 아이디어 착상 단계 (막연한 초기 상태)">01. 아이디어 착상 (막연한 초기 상태)</option>
                     <option value="02. 리서치 & 개념화 단계">02. 리서치 & 개념화 단계</option>
@@ -448,7 +445,7 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-[#5C5243] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
+                  <label className="block text-[#58514C] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
                     보내시는 분 (이름 또는 직무)
                   </label>
                   <input
@@ -456,13 +453,13 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                     placeholder="예: 예비 창업자 / 디자이너"
                     value={newVisitorName}
                     onChange={(e) => setNewVisitorName(e.target.value)}
-                    className="w-full p-3 bg-white border border-[#E5E0D8] rounded-xl text-[#2A2215] focus:outline-hidden focus:border-[#809671]"
+                    className="w-full p-3 bg-white border border-[#313639]/20 text-[#222628] focus:outline-hidden focus:border-[#465839] rounded-xl"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[#5C5243] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
+                <label className="block text-[#58514C] font-semibold mb-1.5 uppercase text-[10px] tracking-wider">
                   어떤 방식으로 진행하고 싶으신가요? (고민 내용 및 질문) *
                 </label>
                 <textarea
@@ -471,7 +468,7 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                   placeholder="막연하게 머릿속에만 있는 생각이나, 현재 부딪힌 한계점, 구체화하고 싶은 방향성을 자유롭게 적어주세요."
                   value={newFirstQuestion}
                   onChange={(e) => setNewFirstQuestion(e.target.value)}
-                  className="w-full p-3 bg-white border border-[#E5E0D8] rounded-xl text-[#2A2215] focus:outline-hidden focus:border-[#809671] resize-none"
+                  className="w-full p-3 bg-white border border-[#313639]/20 text-[#222628] focus:outline-hidden focus:border-[#465839] resize-none rounded-xl"
                 />
               </div>
 
@@ -479,13 +476,13 @@ export const IdeaDialogueSpace: React.FC<IdeaDialogueSpaceProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowNewModal(false)}
-                  className="px-4 py-2.5 text-xs text-[#5C5243] hover:text-[#2A2215]"
+                  className="px-4 py-2.5 text-xs text-[#58514C] hover:text-[#222628] cursor-pointer"
                 >
                   취소
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 text-xs font-mono font-bold tracking-wider uppercase text-white bg-[#809671] hover:bg-[#6E8360] rounded-xl shadow-md transition-all"
+                  className="px-6 py-2.5 text-xs font-mono font-bold tracking-wider uppercase text-white bg-[#465839] hover:bg-[#37472D] border border-[#37472D] transition-all cursor-pointer rounded-xl"
                 >
                   질문 등록하기
                 </button>
